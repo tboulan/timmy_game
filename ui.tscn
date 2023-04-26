@@ -1,0 +1,118 @@
+[gd_scene load_steps=8 format=3 uid="uid://dqo42l5rtb7wo"]
+
+[ext_resource type="FontFile" path="res://Font/Roboto-Regular.tres" id="1_0mx0y"]
+[ext_resource type="Script" path="res://UI.gd" id="2_ftbj8"]
+[ext_resource type="FontFile" path="res://Font/Roboto-Bold.tres" id="2_tsblu"]
+[ext_resource type="Texture2D" uid="uid://bp7dh72r2gerp" path="res://Sprites/Mine.png" id="3_yp40f"]
+[ext_resource type="Texture2D" uid="uid://cbd2sj0bijwq4" path="res://Sprites/Greenhouse.png" id="4_06mp5"]
+[ext_resource type="Texture2D" uid="uid://bnnlhx0jt2vse" path="res://Sprites/SolarPanel.png" id="5_ya1nm"]
+
+[sub_resource type="Theme" id="Theme_i75d7"]
+default_font = ExtResource("1_0mx0y")
+default_font_size = 30
+
+[node name="UI" type="Control"]
+layout_mode = 3
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1280.0
+offset_top = -144.0
+grow_horizontal = 0
+grow_vertical = 0
+theme = SubResource("Theme_i75d7")
+script = ExtResource("2_ftbj8")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 1280.0
+offset_bottom = 144.0
+color = Color(0.172549, 0.172549, 0.172549, 1)
+
+[node name="EndTurnButton" type="Button" parent="."]
+custom_minimum_size = Vector2(200, 73)
+layout_mode = 0
+offset_left = 1046.0
+offset_top = 34.0
+offset_right = 1246.0
+offset_bottom = 107.0
+theme_override_fonts/font = ExtResource("2_tsblu")
+theme_override_font_sizes/font_size = 35
+text = "End Turn"
+
+[node name="BuildingButtons" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 34.0
+offset_top = 34.0
+offset_right = 270.0
+offset_bottom = 109.0
+alignment = 1
+
+[node name="MineButton" type="Button" parent="BuildingButtons"]
+layout_mode = 2
+icon = ExtResource("3_yp40f")
+
+[node name="GreenHouseButton" type="Button" parent="BuildingButtons"]
+layout_mode = 2
+icon = ExtResource("4_06mp5")
+
+[node name="SolarPanelButton" type="Button" parent="BuildingButtons"]
+layout_mode = 2
+icon = ExtResource("5_ya1nm")
+
+[node name="HeaderFoodMetal" type="Label" parent="."]
+layout_mode = 0
+offset_left = 368.0
+offset_top = 32.0
+offset_right = 483.0
+offset_bottom = 110.0
+text = "Food: Metal:"
+horizontal_alignment = 2
+autowrap_mode = 2
+
+[node name="FoodMetalText" type="Label" parent="."]
+layout_mode = 0
+offset_left = 490.0
+offset_top = 32.0
+offset_right = 610.0
+offset_bottom = 110.0
+theme_override_colors/font_color = Color(0.74902, 0.470588, 0.329412, 1)
+theme_override_font_sizes/font_size = 30
+text = "25 (+80) 25 (+80)"
+autowrap_mode = 1
+
+[node name="HeaderOxygenEnergy" type="Label" parent="."]
+layout_mode = 0
+offset_left = 619.0
+offset_top = 32.0
+offset_right = 734.0
+offset_bottom = 110.0
+text = "Oxygen: Energy:"
+horizontal_alignment = 2
+autowrap_mode = 2
+
+[node name="OxygenEnergyText" type="Label" parent="."]
+layout_mode = 0
+offset_left = 739.0
+offset_top = 32.0
+offset_right = 859.0
+offset_bottom = 110.0
+theme_override_colors/font_color = Color(0.74902, 0.470588, 0.329412, 1)
+theme_override_font_sizes/font_size = 30
+text = "25 (+80) 25 (+80)"
+autowrap_mode = 1
+
+[node name="TurnText" type="Label" parent="."]
+layout_mode = 0
+offset_left = 878.0
+offset_top = 51.0
+offset_right = 1014.0
+offset_bottom = 90.0
+text = "Turn 200"
+
+[connection signal="pressed" from="EndTurnButton" to="." method="_on_end_turn_button_pressed"]
+[connection signal="pressed" from="BuildingButtons/MineButton" to="." method="_on_mine_button_pressed"]
+[connection signal="pressed" from="BuildingButtons/GreenHouseButton" to="." method="_on_green_house_button_pressed"]
+[connection signal="pressed" from="BuildingButtons/SolarPanelButton" to="." method="_on_solar_panel_button_pressed"]
