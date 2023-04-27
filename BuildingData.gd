@@ -3,7 +3,9 @@ extends Node
 var base = Building.new(0, preload("res://Sprites/Base.png"), 0, 0, 0, 0)
 var mine = Building.new(1, preload("res://Sprites/Mine.png"), 2, 1, 4, 1)
 var greenhouse = Building.new(2, preload("res://Sprites/Greenhouse.png"), 1, 1, 0, 0)
-var solarpanel = Building.new(3, preload("res://Sprites/SolarPanel.png"), 4, 1, 0, 0)
+var solarPanel = Building.new(3, preload("res://Sprites/SolarPanel.png"), 4, 1, 0, 0)
+var tree = Building.new(5, preload("res://Sprites/Trees1.png"), 0, 0,0 ,0)
+
 
 # --- Building Types ---
 # base			= 0
