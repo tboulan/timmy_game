@@ -54,21 +54,21 @@ func on_select_building (buildingType):
 func place_building (tileToPlaceOn):
 	currentlyPlacingBuilding = false
 	var texture : Texture
-	# are we placing down a Mine?
-	if buildingToPlace == 1:
-		texture = BuildingData.mine.iconTexture
-		add_to_resource_per_turn(BuildingData.mine.prodResource, BuildingData.mine.prodResourceAmount)
-		add_to_resource_per_turn(BuildingData.mine.upkeepResource, -BuildingData.mine.upkeepResourceAmount)
-	# are we placing down a Greenhouse?
-	elif buildingToPlace == 2:
-		texture = BuildingData.greenhouse.iconTexture
-		add_to_resource_per_turn(BuildingData.greenhouse.prodResource, BuildingData.greenhouse.prodResourceAmount)
-		add_to_resource_per_turn(BuildingData.greenhouse.upkeepResource, -BuildingData.greenhouse.upkeepResourceAmount)
-	# are we placing down a Solar Panel?
-	elif buildingToPlace == 3:
-		texture = BuildingData.solarpanel.iconTexture
-		add_to_resource_per_turn(BuildingData.solarpanel.prodResource, BuildingData.solarpanel.prodResourceAmount)
-		add_to_resource_per_turn(BuildingData.solarpanel.upkeepResource, -BuildingData.solarpanel.upkeepResourceAmount)
+	match buildingToPlace:
+		BuildingData.Buildings.MINE:
+			texture = BuildingData.mine.iconTexture
+			add_to_resource_per_turn(BuildingData.mine.prodResource, BuildingData.mine.prodResourceAmount)
+			add_to_resource_per_turn(BuildingData.mine.upkeepResource, -BuildingData.mine.upkeepResourceAmount)
+		BuildingData.Buildings.GREENHOUSE:
+			texture = BuildingData.greenhouse.iconTexture
+			add_to_resource_per_turn(BuildingData.greenhouse.prodResource, BuildingData.greenhouse.prodResourceAmount)
+			add_to_resource_per_turn(BuildingData.greenhouse.upkeepResource, -BuildingData.greenhouse.upkeepResourceAmount)
+		BuildingData.Buildings.SOLAR_PANEL:
+			texture = BuildingData.solarpanel.iconTexture
+			add_to_resource_per_turn(BuildingData.solarpanel.prodResource, BuildingData.solarpanel.prodResourceAmount)
+			add_to_resource_per_turn(BuildingData.solarpanel.upkeepResource, -BuildingData.solarpanel.upkeepResourceAmount)
+		_:
+			printerr("unkown buildingToPlace in GameManger.place_building")	
 	# place the building on the map
 	map.place_building(tileToPlaceOn, texture, buildingToPlace)
 	# update the UI to show changes immediately

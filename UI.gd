@@ -43,17 +43,17 @@ func update_resource_text():
 # called when the Mine building button is pressed
 func _on_mine_button_pressed():
 	buildingButtons.visible = false
-	gameManager.on_select_building(1)
+	gameManager.on_select_building(BuildingData.Buildings.MINE)
 
 # called when the Greenhouse building button is pressed
 func _on_green_house_button_pressed():
 	buildingButtons.visible = false
-	gameManager.on_select_building(2)
+	gameManager.on_select_building(BuildingData.Buildings.GREENHOUSE)
 
 # called when the Solar Panel building button is pressed
 func _on_solar_panel_button_pressed():
 	buildingButtons.visible = false
-	gameManager.on_select_building(3)
+	gameManager.on_select_building(BuildingData.Buildings.SOLAR_PANEL)
 
 func _on_end_turn_button_pressed():
 	gameManager.end_turn()
