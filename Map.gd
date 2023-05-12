@@ -15,7 +15,9 @@ var tileSize : float = 64.0
 func _ready ():
 	# when we're initialized, get all of the tiles
 	allTiles = get_tree().get_nodes_in_group("Tiles")
+	
 	# place random trees
+	print("Tiles ", allTiles.pick_random().global_position)
 	
 	# find the start tile and place the Base building
 	for x in range(allTiles.size()):
