@@ -18,6 +18,8 @@ func _ready ():
 	
 	# place random trees
 	print("Tiles ", allTiles.pick_random().global_position)
+	var tree = preload("res://Sprites/Trees1.png")
+	place_building(allTiles.pick_random(), tree, -1)
 	
 	# find the start tile and place the Base building
 	for x in range(allTiles.size()):
@@ -69,7 +71,8 @@ func disable_tile_highlights():
 		
 # places down a building on the map
 func place_building(tile, texture, buildingType):
-	tilesWithBuildings.append(tile)
+	if buildingType >= 0:   # don't add trees and hills
+		tilesWithBuildings.append(tile)
 	tile.place_building(texture, buildingType)
 	disable_tile_highlights()
 

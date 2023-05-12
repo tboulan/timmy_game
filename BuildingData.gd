@@ -1,6 +1,6 @@
 extends Node
 
-enum Buildings { BASE, MINE, GREENHOUSE, SOLAR_PANEL}
+enum Buildings {NONE, BASE, MINE, GREENHOUSE, SOLAR_PANEL}
 enum Resources {NONE, FOOD, METAL, ENERGY}
 
 var base = Building.new(Buildings.BASE, preload("res://Sprites/Base.png"), 
