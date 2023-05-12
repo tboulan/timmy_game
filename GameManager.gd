@@ -17,7 +17,7 @@ var curTurn : int = 1
 var currentlyPlacingBuilding : bool = false
 
 # type of building we're currently placing
-var buildingToPlace : int
+var buildingToPlace : BuildingData.Buildings
 
 # components
 @onready var ui : Node = get_node("UI")
@@ -75,16 +75,16 @@ func place_building (tileToPlaceOn):
 	ui.update_resource_text()
 
 # adds an amount to a certain resource per turn
-func add_to_resource_per_turn (resource, amount):
-
+func add_to_resource_per_turn(resource, amount):
 	# resource 0 means none, so return
-	if resource == 0:
-		return
-	elif resource == 1:
-		foodPerTurn += amount
-	elif resource == 2:
-		metalPerTurn += amount
-	elif resource == 3:
-		oxygenPerTurn += amount
-	elif resource == 4:
-		energyPerTurn += amount
+	match resource:
+		BuildingData.Resources.NONE:
+			return
+		BuildingData.Resources.FOOD:
+			foodPerTurn += amount
+		BuildingData.Resources.METAL:
+			metalPerTurn += amount
+		BuildingData.Resources.ENERGY:
+			energyPerTurn += amount
+		_:
+			printerr("unknown resource in GameManger.add_to_resource_per_turn")	

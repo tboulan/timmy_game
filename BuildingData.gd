@@ -1,31 +1,28 @@
 extends Node
 
 enum Buildings { BASE, MINE, GREENHOUSE, SOLAR_PANEL}
+enum Resources {NONE, FOOD, METAL, ENERGY}
 
+var base = Building.new(Buildings.BASE, preload("res://Sprites/Base.png"), 
+		Resources.NONE, 0, Resources.NONE, 0)
+var mine = Building.new(Buildings.MINE, preload("res://Sprites/Mine.png"), 
+		Resources.METAL, 1, Resources.ENERGY, 1)
+var greenhouse = Building.new(Buildings.GREENHOUSE, preload("res://Sprites/Greenhouse.png"), 
+		Resources.FOOD, 1, Resources.ENERGY, 1)
+var solarPanel = Building.new(Buildings.SOLAR_PANEL, preload("res://Sprites/SolarPanel.png"), 
+		Resources.ENERGY, 1, Resources.NONE, 0)
 
-# --- Resources ---
-# none			= 0
-# food			= 1
-# metal			= 2
-# oxygen		= 3
-# energy		= 4
-
-var base = Building.new(Buildings.BASE, preload("res://Sprites/Base.png"), 0, 0, 0, 0)
-var mine = Building.new(Buildings.MINE, preload("res://Sprites/Mine.png"), 2, 1, 4, 1)
-var greenhouse = Building.new(Buildings.GREENHOUSE, preload("res://Sprites/Greenhouse.png"), 1, 1, 0, 0)
-var solarPanel = Building.new(Buildings.SOLAR_PANEL, preload("res://Sprites/SolarPanel.png"), 4, 1, 0, 0)
-# var tree = Building.new(5, preload("res://Sprites/Trees1.png"), 0, 0,0 ,0)
 
 class Building:
 	# building type
-	var type : int
+	var type : Buildings
 	# building texture
 	var iconTexture : Texture
 	# resource the building produces
-	var prodResource : int = 0
+	var prodResource : Resources
 	var prodResourceAmount : int
 	# resource the building needs to be maintained
-	var upkeepResource : int = 0
+	var upkeepResource : Resources
 	var upkeepResourceAmount : int
 	func _init (type, iconTexture, prodResource, prodResourceAmount, upkeepResource, upkeepResourceAmount):
 		self.type = type

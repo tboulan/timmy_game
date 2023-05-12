@@ -35,7 +35,7 @@ func place_building(buildingTexture, type):
 	buildingType = type
 	print("buildingType: ", type)
 	
-func get_building_type() -> int:
+func get_building_type() -> BuildingData.Buildings:
 	return buildingType
 	
 
