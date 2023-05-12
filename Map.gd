@@ -15,7 +15,7 @@ var tileSize : float = 64.0
 func _ready ():
 	# when we're initialized, get all of the tiles
 	allTiles = get_tree().get_nodes_in_group("Tiles")
-	# place random mountains
+	# place random trees
 	
 	# find the start tile and place the Base building
 	for x in range(allTiles.size()):
@@ -38,6 +38,7 @@ func get_tile_at_position(position):
 func highlight_available_tiles(building_to_place: int):
 	# loop through all of the tiles with buildings
 	for x in range(tilesWithBuildings.size()):
+		#can't place same building next to each other
 		if tilesWithBuildings[x].get_building_type() == building_to_place:
 			continue
 		# get the tile north, south, east and west of this one
@@ -58,6 +59,7 @@ func highlight_available_tiles(building_to_place: int):
 		if westTile != null:
 			westTile.toggle_highlight(true)
 
+			
 # disables all of the tile highlights
 func disable_tile_highlights():
 	for x in range(allTiles.size()):

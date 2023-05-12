@@ -64,11 +64,11 @@ func place_building (tileToPlaceOn):
 			add_to_resource_per_turn(BuildingData.greenhouse.prodResource, BuildingData.greenhouse.prodResourceAmount)
 			add_to_resource_per_turn(BuildingData.greenhouse.upkeepResource, -BuildingData.greenhouse.upkeepResourceAmount)
 		BuildingData.Buildings.SOLAR_PANEL:
-			texture = BuildingData.solarpanel.iconTexture
-			add_to_resource_per_turn(BuildingData.solarpanel.prodResource, BuildingData.solarpanel.prodResourceAmount)
-			add_to_resource_per_turn(BuildingData.solarpanel.upkeepResource, -BuildingData.solarpanel.upkeepResourceAmount)
+			texture = BuildingData.solarPanel.iconTexture
+			add_to_resource_per_turn(BuildingData.solarPanel.prodResource, BuildingData.solarPanel.prodResourceAmount)
+			add_to_resource_per_turn(BuildingData.solarPanel.upkeepResource, -BuildingData.solarPanel.upkeepResourceAmount)
 		_:
-			printerr("unkown buildingToPlace in GameManger.place_building")	
+			printerr("unknown buildingToPlace in GameManger.place_building")	
 	# place the building on the map
 	map.place_building(tileToPlaceOn, texture, buildingToPlace)
 	# update the UI to show changes immediately
