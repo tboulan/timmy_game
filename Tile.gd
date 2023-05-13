@@ -38,6 +38,10 @@ func place_building(buildingTexture, type):
 func get_building_type() -> BuildingData.Buildings:
 	return buildingType
 	
+func reset():
+	hasBuilding = false
+	buildingIcon.texture = null
+	buildingType = BuildingData.Buildings.NONE
 
 # called when an input event takes place on the tile
 func _on_Tile_input_event(_viewport, event, _shape_idx):

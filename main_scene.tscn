@@ -13,359 +13,359 @@ script = ExtResource("1_6wxtm")
 
 [node name="Tile1" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(32, 32)
-startTile = null
+startTile = false
 
 [node name="Tile2" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(96, 32)
-startTile = null
+startTile = false
 
 [node name="Tile3" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(160, 32)
-startTile = null
+startTile = false
 
 [node name="Tile4" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(224, 32)
-startTile = null
+startTile = false
 
 [node name="Tile5" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(288, 32)
-startTile = null
+startTile = false
 
 [node name="Tile6" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(352, 32)
-startTile = null
+startTile = false
 
 [node name="Tile7" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(416, 32)
-startTile = null
+startTile = false
 
 [node name="Tile8" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(480, 32)
-startTile = null
+startTile = false
 
 [node name="Tile9" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(544, 32)
-startTile = null
+startTile = false
 
 [node name="Tile10" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(608, 32)
-startTile = null
+startTile = false
 
 [node name="Tile11" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(672, 32)
-startTile = null
+startTile = false
 
 [node name="Tile12" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(736, 32)
-startTile = null
+startTile = false
 
 [node name="Tile13" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(800, 32)
-startTile = null
+startTile = false
 
 [node name="Tile14" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(864, 32)
-startTile = null
+startTile = false
 
 [node name="Tile15" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(928, 32)
-startTile = null
+startTile = false
 
 [node name="Tile16" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(992, 32)
-startTile = null
+startTile = false
 
 [node name="Tile17" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(1056, 32)
-startTile = null
+startTile = false
 
 [node name="Tile18" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(1120, 32)
-startTile = null
+startTile = false
 
 [node name="Tile19" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(1184, 32)
-startTile = null
+startTile = false
 
 [node name="Tile20" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(1248, 32)
-startTile = null
+startTile = false
 
 [node name="Tile21" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(32, 96)
-startTile = null
+startTile = false
 
 [node name="Tile22" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(96, 96)
-startTile = null
+startTile = false
 
 [node name="Tile23" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(160, 96)
-startTile = null
+startTile = false
 
 [node name="Tile24" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(224, 96)
-startTile = null
+startTile = false
 
 [node name="Tile25" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(288, 96)
-startTile = null
+startTile = false
 
 [node name="Tile26" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(352, 96)
-startTile = null
+startTile = false
 
 [node name="Tile27" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(416, 96)
-startTile = null
+startTile = false
 
 [node name="Tile28" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(480, 96)
-startTile = null
+startTile = false
 
 [node name="Tile29" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(544, 96)
-startTile = null
+startTile = false
 
 [node name="Tile30" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(608, 96)
-startTile = null
+startTile = false
 
 [node name="Tile31" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(672, 96)
-startTile = null
+startTile = false
 
 [node name="Tile32" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(736, 96)
-startTile = null
+startTile = false
 
 [node name="Tile33" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(800, 96)
-startTile = null
+startTile = false
 
 [node name="Tile34" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(864, 96)
-startTile = null
+startTile = false
 
 [node name="Tile35" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(928, 96)
-startTile = null
+startTile = false
 
 [node name="Tile36" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(992, 96)
-startTile = null
+startTile = false
 
 [node name="Tile37" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(1056, 96)
-startTile = null
+startTile = false
 
 [node name="Tile38" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(1120, 96)
-startTile = null
+startTile = false
 
 [node name="Tile39" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(1184, 96)
-startTile = null
+startTile = false
 
 [node name="Tile40" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(1248, 96)
-startTile = null
+startTile = false
 
 [node name="Tile41" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(32, 160)
-startTile = null
+startTile = false
 
 [node name="Tile42" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(96, 160)
-startTile = null
+startTile = false
 
 [node name="Tile43" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(160, 160)
-startTile = null
+startTile = false
 
 [node name="Tile44" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(224, 160)
-startTile = null
+startTile = false
 
 [node name="Tile45" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(288, 160)
-startTile = null
+startTile = false
 
 [node name="Tile46" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(352, 160)
-startTile = null
+startTile = false
 
 [node name="Tile47" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(416, 160)
-startTile = null
+startTile = false
 
 [node name="Tile48" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(480, 160)
-startTile = null
+startTile = false
 
 [node name="Tile49" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(544, 160)
-startTile = null
+startTile = false
 
 [node name="Tile50" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(608, 160)
-startTile = null
+startTile = false
 
 [node name="Tile51" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(672, 160)
-startTile = null
+startTile = false
 
 [node name="Tile52" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(736, 160)
-startTile = null
+startTile = false
 
 [node name="Tile53" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(800, 160)
-startTile = null
+startTile = false
 
 [node name="Tile54" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(864, 160)
-startTile = null
+startTile = false
 
 [node name="Tile55" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(928, 160)
-startTile = null
+startTile = false
 
 [node name="Tile56" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(992, 160)
-startTile = null
+startTile = false
 
 [node name="Tile57" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(1056, 160)
-startTile = null
+startTile = false
 
 [node name="Tile58" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(1120, 160)
-startTile = null
+startTile = false
 
 [node name="Tile59" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(1184, 160)
-startTile = null
+startTile = false
 
 [node name="Tile60" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(1248, 160)
-startTile = null
+startTile = false
 
 [node name="Tile61" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(32, 224)
-startTile = null
+startTile = false
 
 [node name="Tile62" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(96, 224)
-startTile = null
+startTile = false
 
 [node name="Tile63" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(160, 224)
-startTile = null
+startTile = false
 
 [node name="Tile64" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(224, 224)
-startTile = null
+startTile = false
 
 [node name="Tile65" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(288, 224)
-startTile = null
+startTile = false
 
 [node name="Tile66" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(352, 224)
-startTile = null
+startTile = false
 
 [node name="Tile67" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(416, 224)
-startTile = null
+startTile = false
 
 [node name="Tile68" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(480, 224)
-startTile = null
+startTile = false
 
 [node name="Tile69" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(544, 224)
-startTile = null
+startTile = false
 
 [node name="Tile70" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(608, 224)
-startTile = null
+startTile = false
 
 [node name="Tile71" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(672, 224)
-startTile = null
+startTile = false
 
 [node name="Tile72" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(736, 224)
-startTile = null
+startTile = false
 
 [node name="Tile73" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(800, 224)
-startTile = null
+startTile = false
 
 [node name="Tile74" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(864, 224)
-startTile = null
+startTile = false
 
 [node name="Tile75" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(928, 224)
-startTile = null
+startTile = false
 
 [node name="Tile76" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(992, 224)
-startTile = null
+startTile = false
 
 [node name="Tile77" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(1056, 224)
-startTile = null
+startTile = false
 
 [node name="Tile78" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(1120, 224)
-startTile = null
+startTile = false
 
 [node name="Tile79" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(1184, 224)
-startTile = null
+startTile = false
 
 [node name="Tile80" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(1248, 224)
-startTile = null
+startTile = false
 
 [node name="Tile81" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(32, 288)
-startTile = null
+startTile = false
 
 [node name="Tile82" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(96, 288)
-startTile = null
+startTile = false
 
 [node name="Tile83" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(160, 288)
-startTile = null
+startTile = false
 
 [node name="Tile84" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(224, 288)
-startTile = null
+startTile = false
 
 [node name="Tile85" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(288, 288)
-startTile = null
+startTile = false
 
 [node name="Tile86" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(352, 288)
-startTile = null
+startTile = false
 
 [node name="Tile87" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(416, 288)
-startTile = null
+startTile = false
 
 [node name="Tile88" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(480, 288)
-startTile = null
+startTile = false
 
 [node name="Tile89" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(544, 288)
-startTile = null
+startTile = false
 
 [node name="Tile90" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(608, 288)
@@ -373,363 +373,363 @@ startTile = true
 
 [node name="Tile91" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(672, 288)
-startTile = null
+startTile = false
 
 [node name="Tile92" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(736, 288)
-startTile = null
+startTile = false
 
 [node name="Tile93" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(800, 288)
-startTile = null
+startTile = false
 
 [node name="Tile94" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(864, 288)
-startTile = null
+startTile = false
 
 [node name="Tile95" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(928, 288)
-startTile = null
+startTile = false
 
 [node name="Tile96" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(992, 288)
-startTile = null
+startTile = false
 
 [node name="Tile97" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(1056, 288)
-startTile = null
+startTile = false
 
 [node name="Tile98" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(1120, 288)
-startTile = null
+startTile = false
 
 [node name="Tile99" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(1184, 288)
-startTile = null
+startTile = false
 
 [node name="Tile100" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(1248, 288)
-startTile = null
+startTile = false
 
 [node name="Tile101" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(32, 352)
-startTile = null
+startTile = false
 
 [node name="Tile102" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(96, 352)
-startTile = null
+startTile = false
 
 [node name="Tile103" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(160, 352)
-startTile = null
+startTile = false
 
 [node name="Tile104" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(224, 352)
-startTile = null
+startTile = false
 
 [node name="Tile105" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(288, 352)
-startTile = null
+startTile = false
 
 [node name="Tile106" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(352, 352)
-startTile = null
+startTile = false
 
 [node name="Tile107" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(416, 352)
-startTile = null
+startTile = false
 
 [node name="Tile108" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(480, 352)
-startTile = null
+startTile = false
 
 [node name="Tile109" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(544, 352)
-startTile = null
+startTile = false
 
 [node name="Tile110" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(608, 352)
-startTile = null
+startTile = false
 
 [node name="Tile111" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(672, 352)
-startTile = null
+startTile = false
 
 [node name="Tile112" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(736, 352)
-startTile = null
+startTile = false
 
 [node name="Tile113" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(800, 352)
-startTile = null
+startTile = false
 
 [node name="Tile114" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(864, 352)
-startTile = null
+startTile = false
 
 [node name="Tile115" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(928, 352)
-startTile = null
+startTile = false
 
 [node name="Tile116" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(992, 352)
-startTile = null
+startTile = false
 
 [node name="Tile117" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(1056, 352)
-startTile = null
+startTile = false
 
 [node name="Tile118" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(1120, 352)
-startTile = null
+startTile = false
 
 [node name="Tile119" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(1184, 352)
-startTile = null
+startTile = false
 
 [node name="Tile120" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(1248, 352)
-startTile = null
+startTile = false
 
 [node name="Tile121" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(32, 416)
-startTile = null
+startTile = false
 
 [node name="Tile122" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(96, 416)
-startTile = null
+startTile = false
 
 [node name="Tile123" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(160, 416)
-startTile = null
+startTile = false
 
 [node name="Tile124" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(224, 416)
-startTile = null
+startTile = false
 
 [node name="Tile125" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(288, 416)
-startTile = null
+startTile = false
 
 [node name="Tile126" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(352, 416)
-startTile = null
+startTile = false
 
 [node name="Tile127" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(416, 416)
-startTile = null
+startTile = false
 
 [node name="Tile128" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(480, 416)
-startTile = null
+startTile = false
 
 [node name="Tile129" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(544, 416)
-startTile = null
+startTile = false
 
 [node name="Tile130" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(608, 416)
-startTile = null
+startTile = false
 
 [node name="Tile131" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(672, 416)
-startTile = null
+startTile = false
 
 [node name="Tile132" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(736, 416)
-startTile = null
+startTile = false
 
 [node name="Tile133" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(800, 416)
-startTile = null
+startTile = false
 
 [node name="Tile134" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(864, 416)
-startTile = null
+startTile = false
 
 [node name="Tile135" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(928, 416)
-startTile = null
+startTile = false
 
 [node name="Tile136" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(992, 416)
-startTile = null
+startTile = false
 
 [node name="Tile137" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(1056, 416)
-startTile = null
+startTile = false
 
 [node name="Tile138" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(1120, 416)
-startTile = null
+startTile = false
 
 [node name="Tile139" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(1184, 416)
-startTile = null
+startTile = false
 
 [node name="Tile140" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(1248, 416)
-startTile = null
+startTile = false
 
 [node name="Tile141" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(32, 480)
-startTile = null
+startTile = false
 
 [node name="Tile142" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(96, 480)
-startTile = null
+startTile = false
 
 [node name="Tile143" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(160, 480)
-startTile = null
+startTile = false
 
 [node name="Tile144" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(224, 480)
-startTile = null
+startTile = false
 
 [node name="Tile145" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(288, 480)
-startTile = null
+startTile = false
 
 [node name="Tile146" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(352, 480)
-startTile = null
+startTile = false
 
 [node name="Tile147" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(416, 480)
-startTile = null
+startTile = false
 
 [node name="Tile148" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(480, 480)
-startTile = null
+startTile = false
 
 [node name="Tile149" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(544, 480)
-startTile = null
+startTile = false
 
 [node name="Tile150" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(608, 480)
-startTile = null
+startTile = false
 
 [node name="Tile151" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(672, 480)
-startTile = null
+startTile = false
 
 [node name="Tile152" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(736, 480)
-startTile = null
+startTile = false
 
 [node name="Tile153" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(800, 480)
-startTile = null
+startTile = false
 
 [node name="Tile154" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(864, 480)
-startTile = null
+startTile = false
 
 [node name="Tile155" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(928, 480)
-startTile = null
+startTile = false
 
 [node name="Tile156" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(992, 480)
-startTile = null
+startTile = false
 
 [node name="Tile157" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(1056, 480)
-startTile = null
+startTile = false
 
 [node name="Tile158" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(1120, 480)
-startTile = null
+startTile = false
 
 [node name="Tile159" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(1184, 480)
-startTile = null
+startTile = false
 
 [node name="Tile160" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(1248, 480)
-startTile = null
+startTile = false
 
 [node name="Tile161" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(32, 544)
-startTile = null
+startTile = false
 
 [node name="Tile162" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(96, 544)
-startTile = null
+startTile = false
 
 [node name="Tile163" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(160, 544)
-startTile = null
+startTile = false
 
 [node name="Tile164" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(224, 544)
-startTile = null
+startTile = false
 
 [node name="Tile165" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(288, 544)
-startTile = null
+startTile = false
 
 [node name="Tile166" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(352, 544)
-startTile = null
+startTile = false
 
 [node name="Tile167" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(416, 544)
-startTile = null
+startTile = false
 
 [node name="Tile168" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(480, 544)
-startTile = null
+startTile = false
 
 [node name="Tile169" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(544, 544)
-startTile = null
+startTile = false
 
 [node name="Tile170" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(608, 544)
-startTile = null
+startTile = false
 
 [node name="Tile171" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(672, 544)
-startTile = null
+startTile = false
 
 [node name="Tile172" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(736, 544)
-startTile = null
+startTile = false
 
 [node name="Tile173" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(800, 544)
-startTile = null
+startTile = false
 
 [node name="Tile174" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(864, 544)
-startTile = null
+startTile = false
 
 [node name="Tile175" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(928, 544)
-startTile = null
+startTile = false
 
 [node name="Tile176" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(992, 544)
-startTile = null
+startTile = false
 
 [node name="Tile177" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(1056, 544)
-startTile = null
+startTile = false
 
 [node name="Tile178" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(1120, 544)
-startTile = null
+startTile = false
 
 [node name="Tile179" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(1184, 544)
-startTile = null
+startTile = false
 
 [node name="Tile180" parent="Tiles" instance=ExtResource("1_387f7")]
 position = Vector2(1248, 544)
-startTile = null
+startTile = false
 
 [node name="UI" parent="." instance=ExtResource("2_oinbt")]
 offset_left = 0.0

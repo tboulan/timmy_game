@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b6w16hbpfg1se"
-path="res://.godot/imported/Trees1.png-78c0dbde74814a7f060cee84f3fe5dc1.ctex"
+uid="uid://5wkrecae1w2k"
+path="res://.godot/imported/Hill2.png-a21e6403b6270949c83d61ae32f25f12.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/Trees1.png"
-dest_files=["res://.godot/imported/Trees1.png-78c0dbde74814a7f060cee84f3fe5dc1.ctex"]
+source_file="res://Sprites/Hill2.png"
+dest_files=["res://.godot/imported/Hill2.png-a21e6403b6270949c83d61ae32f25f12.ctex"]
 
 [params]
 

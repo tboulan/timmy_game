@@ -16,15 +16,31 @@ func _ready ():
 	# when we're initialized, get all of the tiles
 	allTiles = get_tree().get_nodes_in_group("Tiles")
 	
-	# place random trees
-	print("Tiles ", allTiles.pick_random().global_position)
-	var tree = preload("res://Sprites/Trees1.png")
-	place_building(allTiles.pick_random(), tree, -1)
+	place_trees_and_hills()
 	
 	# find the start tile and place the Base building
 	for x in range(allTiles.size()):
 		if allTiles[x].startTile == true:
 			place_building(allTiles[x], BuildingData.base.iconTexture, 0)
+			
+			# remove trees and hills next to base
+			if get_tile_at_position(allTiles[x].position + Vector2(0, tileSize)) == null:
+				print("Null Position? ", allTiles[x].position + Vector2(0, tileSize))			
+			if get_tile_at_position(allTiles[x].position + Vector2(0, -tileSize)) == null:
+				print("Null Position? ", allTiles[x].position + Vector2(0, -tileSize))	
+			if get_tile_at_position(allTiles[x].position + Vector2(tileSize, 0)) == null:
+				print("Null Position? ", allTiles[x].position + Vector2(tileSize, 0))				
+			if get_tile_at_position(allTiles[x].position + Vector2(-tileSize, 0)) == null:
+				print("Null Position? ", allTiles[x].position + Vector2(-tileSize, 0))	
+
+			if get_tile_at_position2(allTiles[x].position + Vector2(0, tileSize)) != null:
+				get_tile_at_position2(allTiles[x].position + Vector2(0, tileSize)).reset() #North
+			if get_tile_at_position2(allTiles[x].position + Vector2(0, -tileSize)) != null:
+				get_tile_at_position2(allTiles[x].position + Vector2(0, -tileSize)).reset() #South
+			if get_tile_at_position2(allTiles[x].position + Vector2(tileSize, 0)) != null:
+				get_tile_at_position2(allTiles[x].position + Vector2(tileSize, 0)).reset() #East
+			if get_tile_at_position2(allTiles[x].position + Vector2(-tileSize, 0)) != null:
+				get_tile_at_position2(allTiles[x].position + Vector2(-tileSize, 0)).reset() #West
 
 
 # returns a tile at the given position - returns null if no tile is found
@@ -34,6 +50,14 @@ func get_tile_at_position(position):
 	for x in range(allTiles.size()):
 		# if the tile matches our given position, return it
 		if allTiles[x].position == position and allTiles[x].hasBuilding == false:
+			return allTiles[x]
+	return null
+
+func get_tile_at_position2(position):
+	# loop through all of the tiles
+	for x in range(allTiles.size()):
+		# if the tile matches our given position, return it
+		if allTiles[x].position == position:
 			return allTiles[x]
 	return null
 
@@ -77,3 +101,18 @@ func place_building(tile, texture, buildingType):
 	disable_tile_highlights()
 
 
+func place_trees_and_hills():
+	# place random trees
+	var tree1 = preload("res://Sprites/Tree1.png")
+	var tree2 = preload("res://Sprites/Tree2.png")
+	var tree3 = preload("res://Sprites/Tree3.png")
+	for x in range(1, 20):
+		place_building(allTiles.pick_random(), [tree1, tree2, tree3].pick_random(), -1)	
+
+	# place random hills
+	var hill1 = preload("res://Sprites/Hill1.png")
+	var hill2 = preload("res://Sprites/Hill2.png")
+	var hill3 = preload("res://Sprites/Hill3.png")
+	for x in range(1, 20):
+		place_building(allTiles.pick_random(), [hill1, hill2, hill3].pick_random(), -2)	
+	
