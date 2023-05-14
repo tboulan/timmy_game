@@ -1,16 +1,16 @@
 extends Node2D
 
 # current amount of each resource we have
-var curFood : int = 0
-var curMetal : int = 0
-var curOxygen : int = 0
-var curEnergy : int = 0
+var curPeople : int = 10
+var curFood : int = 100
+var curMetal : int = 5
+var curEnergy : int = 20
 
 # amount of each resource we get each turn
 var foodPerTurn : int = 0
 var metalPerTurn : int = 0
-var oxygenPerTurn : int = 0
 var energyPerTurn : int = 0
+var peoplePerTurn : int = 0
 var curTurn : int = 1
 
 # are we currently placing down a building?
@@ -24,7 +24,6 @@ var buildingToPlace : BuildingData.Buildings
 @onready var map : Node = get_node("Tiles")
 
 func _ready():
-
 	# updates the UI when the game starts
 	ui.update_resource_text()
 	ui.on_end_turn()
@@ -34,8 +33,9 @@ func end_turn():
 	# update our current resource amounts
 	curFood += foodPerTurn
 	curMetal += metalPerTurn
-	curOxygen += oxygenPerTurn
 	curEnergy += energyPerTurn
+	# People eat food
+	curFood = curFood - curPeople
 	# increase current turn
 	curTurn += 1
 	# update the UI
@@ -56,14 +56,17 @@ func place_building (tileToPlaceOn):
 	var texture : Texture
 	match buildingToPlace:
 		BuildingData.Buildings.MINE:
+			curMetal = curMetal - 1  
 			texture = BuildingData.mine.iconTexture
 			add_to_resource_per_turn(BuildingData.mine.prodResource, BuildingData.mine.prodResourceAmount)
 			add_to_resource_per_turn(BuildingData.mine.upkeepResource, -BuildingData.mine.upkeepResourceAmount)
 		BuildingData.Buildings.GREENHOUSE:
+			curMetal = curMetal - 1 
 			texture = BuildingData.greenhouse.iconTexture
 			add_to_resource_per_turn(BuildingData.greenhouse.prodResource, BuildingData.greenhouse.prodResourceAmount)
 			add_to_resource_per_turn(BuildingData.greenhouse.upkeepResource, -BuildingData.greenhouse.upkeepResourceAmount)
 		BuildingData.Buildings.SOLAR_PANEL:
+			curMetal = curMetal - 1 
 			texture = BuildingData.solarPanel.iconTexture
 			add_to_resource_per_turn(BuildingData.solarPanel.prodResource, BuildingData.solarPanel.prodResourceAmount)
 			add_to_resource_per_turn(BuildingData.solarPanel.upkeepResource, -BuildingData.solarPanel.upkeepResourceAmount)

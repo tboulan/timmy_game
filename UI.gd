@@ -7,7 +7,7 @@ extends Control
 @onready var foodMetalText : Label = get_node("FoodMetalText")
 
 # text displaying the oxygen and energy resources
-@onready var oxygenEnergyText : Label = get_node("OxygenEnergyText")
+@onready var peopleEnergyText : Label = get_node("PeopleEnergyText")
 
 # text showing our current turn
 @onready var curTurnText : Label = get_node("TurnText")
@@ -32,12 +32,12 @@ func update_resource_text():
 	foodMetalText.text = foodMetal
 
 	# set the oxygen and energy text
-	var oxygenEnergy = ""
+	var peopleEnergy = ""
 	# set the text, e.g. "13 (+5)"
-	oxygenEnergy += str(gameManager.curOxygen) + " (" + ("+" if gameManager.oxygenPerTurn >= 0 else "") + str(gameManager.oxygenPerTurn) + ")"
-	oxygenEnergy += "\n"
-	oxygenEnergy += str(gameManager.curEnergy) + " (" + ("+" if gameManager.energyPerTurn >= 0 else "") + str(gameManager.energyPerTurn) + ")"
-	oxygenEnergyText.text = oxygenEnergy
+	peopleEnergy += str(gameManager.curPeople) + " (" + ("+" if gameManager.peoplePerTurn >= 0 else "") + str(gameManager.peoplePerTurn) + ")"
+	peopleEnergy += "\n"
+	peopleEnergy += str(gameManager.curEnergy) + " (" + ("+" if gameManager.energyPerTurn >= 0 else "") + str(gameManager.energyPerTurn) + ")"
+	peopleEnergyText.text = peopleEnergy
 
 
 # called when the Mine building button is pressed

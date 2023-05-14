@@ -6,10 +6,14 @@ var allTiles : Array
 # all the tiles which have buildings on them
 var tilesWithBuildings : Array
 
-#Maybe - all tiles with terrain, or all rock/all trees
-
 # size of a tile
 var tileSize : float = 64.0
+
+# for finding tiles north, south, east and westof selected tile
+var adjacents = [
+	Vector2(0, tileSize), Vector2(0, -tileSize), # north, south
+	Vector2(tileSize, 0), Vector2(-tileSize, 0), # east, west
+]
 
 # Called when the node enters the scene tree for the first time.
 func _ready ():
@@ -21,26 +25,14 @@ func _ready ():
 	# find the start tile and place the Base building
 	for x in range(allTiles.size()):
 		if allTiles[x].startTile == true:
-			place_building(allTiles[x], BuildingData.base.iconTexture, 0)
+			# Base building
+			place_building(allTiles[x], BuildingData.base.iconTexture, BuildingData.Buildings.BASE)
 			
 			# remove trees and hills next to base
-			if get_tile_at_position(allTiles[x].position + Vector2(0, tileSize)) == null:
-				print("Null Position? ", allTiles[x].position + Vector2(0, tileSize))			
-			if get_tile_at_position(allTiles[x].position + Vector2(0, -tileSize)) == null:
-				print("Null Position? ", allTiles[x].position + Vector2(0, -tileSize))	
-			if get_tile_at_position(allTiles[x].position + Vector2(tileSize, 0)) == null:
-				print("Null Position? ", allTiles[x].position + Vector2(tileSize, 0))				
-			if get_tile_at_position(allTiles[x].position + Vector2(-tileSize, 0)) == null:
-				print("Null Position? ", allTiles[x].position + Vector2(-tileSize, 0))	
+			# (don't need null check, these must be in the middle of the map
+			for adjacent in adjacents:
+				get_tile_at_position2(allTiles[x].position + adjacent).reset()
 
-			if get_tile_at_position2(allTiles[x].position + Vector2(0, tileSize)) != null:
-				get_tile_at_position2(allTiles[x].position + Vector2(0, tileSize)).reset() #North
-			if get_tile_at_position2(allTiles[x].position + Vector2(0, -tileSize)) != null:
-				get_tile_at_position2(allTiles[x].position + Vector2(0, -tileSize)).reset() #South
-			if get_tile_at_position2(allTiles[x].position + Vector2(tileSize, 0)) != null:
-				get_tile_at_position2(allTiles[x].position + Vector2(tileSize, 0)).reset() #East
-			if get_tile_at_position2(allTiles[x].position + Vector2(-tileSize, 0)) != null:
-				get_tile_at_position2(allTiles[x].position + Vector2(-tileSize, 0)).reset() #West
 
 
 # returns a tile at the given position - returns null if no tile is found
@@ -52,6 +44,7 @@ func get_tile_at_position(position):
 		if allTiles[x].position == position and allTiles[x].hasBuilding == false:
 			return allTiles[x]
 	return null
+
 
 func get_tile_at_position2(position):
 	# loop through all of the tiles
@@ -70,24 +63,13 @@ func highlight_available_tiles(building_to_place: int):
 		if tilesWithBuildings[x].get_building_type() == building_to_place:
 			continue
 		# get the tile north, south, east and west of this one
-		var northTile = get_tile_at_position(tilesWithBuildings[x].position + Vector2(0, tileSize))
-		var southTile = get_tile_at_position(tilesWithBuildings[x].position + Vector2(0, -tileSize))
-		var eastTile = get_tile_at_position(tilesWithBuildings[x].position + Vector2(tileSize, 0))
-		var westTile = get_tile_at_position(tilesWithBuildings[x].position + Vector2(-tileSize, 0))
-		
-		#print("N: ", typeof(northTile), ", S: ", southTile, ", E: ", eastTile, ", W: ", westTile)
-		# if the directional tiles aren't null, 
-		# toggle their highlight - allowing us to build
-		if northTile != null:
-			northTile.toggle_highlight(true)
-		if southTile != null:
-			southTile.toggle_highlight(true)
-		if eastTile != null:
-			eastTile.toggle_highlight(true)
-		if westTile != null:
-			westTile.toggle_highlight(true)
+		for adjacent in adjacents:
+			var tile = get_tile_at_position(tilesWithBuildings[x].position+ adjacent)	
+			# if not null, toggle their highlight - allowing us to build
+			if tile != null:
+				tile.toggle_highlight(true)
 
-			
+
 # disables all of the tile highlights
 func disable_tile_highlights():
 	for x in range(allTiles.size()):

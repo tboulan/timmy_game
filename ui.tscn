@@ -83,17 +83,17 @@ theme_override_font_sizes/font_size = 30
 text = "25 (+80) 25 (+80)"
 autowrap_mode = 1
 
-[node name="HeaderOxygenEnergy" type="Label" parent="."]
+[node name="HeaderPeopleEnergy" type="Label" parent="."]
 layout_mode = 0
 offset_left = 619.0
 offset_top = 32.0
 offset_right = 734.0
 offset_bottom = 110.0
-text = "Oxygen: Energy:"
+text = "People: Energy:"
 horizontal_alignment = 2
 autowrap_mode = 2
 
-[node name="OxygenEnergyText" type="Label" parent="."]
+[node name="PeopleEnergyText" type="Label" parent="."]
 layout_mode = 0
 offset_left = 739.0
 offset_top = 32.0
