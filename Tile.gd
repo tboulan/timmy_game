@@ -11,7 +11,7 @@ var hasBuilding : bool = false
 var canPlaceBuilding : bool = false
 
 # what building is here?
-var buildingType : int = BuildingData.Buildings.NONE
+var buildingType : BuildingData.Buildings = BuildingData.Buildings.NONE
 
 # components
 @onready var highlight : Sprite2D = get_node("Highlight")

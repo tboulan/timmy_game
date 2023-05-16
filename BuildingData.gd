@@ -24,10 +24,10 @@ class Building:
 	# resource the building needs to be maintained
 	var upkeepResource : Resources
 	var upkeepResourceAmount : int
-	func _init (type, iconTexture, prodResource, prodResourceAmount, upkeepResource, upkeepResourceAmount):
-		self.type = type
-		self.iconTexture = iconTexture
-		self.prodResource = prodResource
-		self.prodResourceAmount = prodResourceAmount
-		self.upkeepResource = upkeepResource
-		self.upkeepResourceAmount = upkeepResourceAmount
+	func _init (newType, iTexture, pResource, pResourceAmount, uResource, uResourceAmount):
+		self.type = newType
+		self.iconTexture = iTexture
+		self.prodResource = pResource
+		self.prodResourceAmount = pResourceAmount
+		self.upkeepResource = uResource
+		self.upkeepResourceAmount = uResourceAmount

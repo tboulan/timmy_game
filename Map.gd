@@ -72,14 +72,12 @@ func highlight_available_tiles(building_to_place: int):
 			var tile = get_tile_at_position(tilesWithBuildings[x].position + adjacent)	
 			# if not null, toggle their highlight - allowing us to build
 			if tile != null:
-				tilesToHighlight.append(tile)
-				#tile.toggle_highlight(true)
-	for x in range(tilesToHighlight.size()-1, 0, -1):
-		# get the tile north, south, east and west of this one
-		for adjacent in adjacents:
-			var tile = get_tile_at_position(tilesToHighlight[x].position + adjacent)
-			if tile!= null and tile.get_building_type() == building_to_place:
-				tilesToHighlight.remove_at(x)
+				# disallow placing same buildings adjacent
+#				for adjacent2 in adjacents:
+#					var tile2 =  get_tile_at_position(tile.position + adjacent)	
+#					if tile2 == null or tile2.get_building_type() == building_to_place:
+#						break
+				tile.toggle_highlight(true)
 
 
 # disables all of the tile highlights
