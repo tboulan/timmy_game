@@ -33,7 +33,6 @@ func place_building(buildingTexture, type):
 	hasBuilding = true
 	buildingIcon.texture = buildingTexture
 	buildingType = type
-	print("buildingType: ", type)
 	
 func get_building_type() -> BuildingData.Buildings:
 	return buildingType

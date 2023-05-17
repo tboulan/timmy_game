@@ -7,7 +7,7 @@ var allTiles : Array
 var tilesWithBuildings : Array
 
 # tiles with buildings to be checked if legal
-var tilesToHighlight : Array
+var tileHighlights : Array
 
 
 # size of a tile
@@ -31,7 +31,6 @@ func _ready ():
 		if allTiles[x].startTile == true:
 			# Base building
 			place_building(allTiles[x], BuildingData.base.iconTexture, BuildingData.Buildings.BASE)
-			
 			# remove trees and hills next to base
 			# (don't need null check, these must be in the middle of the map
 			for adjacent in adjacents:
@@ -61,23 +60,51 @@ func get_tile_at_position2(position):
 
 # highlights the tiles we can place buildings on
 func highlight_available_tiles(building_to_place: int):
-	tilesToHighlight.clear()
+	tileHighlights.clear()
 	# loop through all of the tiles with buildings
 	for x in range(tilesWithBuildings.size()):
 		#can't place same building next to each other
 		if tilesWithBuildings[x].get_building_type() == building_to_place:
 			continue
-		# get the tile north, south, east and west of this one
+		get_tiles_next_to_buildings(x)
+		
+	remove_same_building_highlights(building_to_place)
+	match building_to_place:
+		BuildingData.Buildings.MINE:
+			remove_highlights_not_next_to_terrain(BuildingData.Buildings.HILL)
+		BuildingData.Buildings.GREENHOUSE:
+			remove_highlights_not_next_to_terrain(BuildingData.Buildings.TREE)
+		BuildingData.Buildings.SOLAR_PANEL:
+			remove_highlights_next_to_terrain()
+		_:
+			print("unknown building in Map.remove_same_building_highlights(): ", building_to_place)			
+	
+	for x in range(tileHighlights.size()):
+		tileHighlights[x].toggle_highlight(true)
+
+func remove_highlights_not_next_to_terrain(type: BuildingData.Buildings):
+	pass
+
+func remove_highlights_next_to_terrain():
+	remove_same_building_highlights(BuildingData.Buildings.HILL)
+	remove_same_building_highlights(BuildingData.Buildings.TREE)
+
+func remove_same_building_highlights(building_to_place: int):
+	if tileHighlights.size() < 1: return
+	for x in range(tileHighlights.size()-1, -1, -1):
+		var remove = false
 		for adjacent in adjacents:
-			var tile = get_tile_at_position(tilesWithBuildings[x].position + adjacent)	
-			# if not null, toggle their highlight - allowing us to build
-			if tile != null:
-				# disallow placing same buildings adjacent
-#				for adjacent2 in adjacents:
-#					var tile2 =  get_tile_at_position(tile.position + adjacent)	
-#					if tile2 == null or tile2.get_building_type() == building_to_place:
-#						break
-				tile.toggle_highlight(true)
+			var tile = get_tile_at_position2(tileHighlights[x].position + adjacent)
+			if tile != null and tile.get_building_type() == building_to_place:
+				remove = true
+		if remove: tileHighlights.remove_at(x)
+		
+func get_tiles_next_to_buildings(x: int):
+	for adjacent in adjacents:
+		var tile = get_tile_at_position(tilesWithBuildings[x].position + adjacent)	
+		# if not null, add to highlight array - allowing us to build
+		if tile != null:
+			tileHighlights.append(tile)
 
 
 # disables all of the tile highlights
