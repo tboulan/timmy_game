@@ -1,6 +1,6 @@
 extends Node
 
-enum Buildings {HILL=-2, TREE, NONE, BASE, MINE, GREENHOUSE, SOLAR_PANEL}
+enum Buildings {HILL=-2, TREE, NONE, BASE, MINE, GREENHOUSE, SOLAR_PANEL, CONNECTOR}
 enum Resources {NONE, FOOD, METAL, ENERGY}
 
 var base = Building.new(Buildings.BASE, preload("res://Sprites/Base.png"), 
@@ -11,7 +11,8 @@ var greenhouse = Building.new(Buildings.GREENHOUSE, preload("res://Sprites/Green
 		Resources.FOOD, 1, Resources.ENERGY, 1)
 var solarPanel = Building.new(Buildings.SOLAR_PANEL, preload("res://Sprites/SolarPanel.png"), 
 		Resources.ENERGY, 1, Resources.NONE, 0)
-
+var connector = Building.new(Buildings.CONNECTOR, preload("res://Sprites/Connector.png"), 
+		Resources.NONE, 0, Resources.NONE, 0)
 
 class Building:
 	# building type

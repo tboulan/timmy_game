@@ -55,5 +55,11 @@ func _on_solar_panel_button_pressed():
 	buildingButtons.visible = false
 	gameManager.on_select_building(BuildingData.Buildings.SOLAR_PANEL)
 
+# called when the Inter-Connector button is pressed
+func _on_connector_button_pressed():
+	buildingButtons.visible = false
+	gameManager.on_select_building(BuildingData.Buildings.CONNECTOR)
+
+
 func _on_end_turn_button_pressed():
 	gameManager.end_turn()

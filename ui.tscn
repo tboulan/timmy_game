@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://dqo42l5rtb7wo"]
+[gd_scene load_steps=9 format=3 uid="uid://dqo42l5rtb7wo"]
 
 [ext_resource type="FontFile" path="res://Font/Roboto-Regular.tres" id="1_0mx0y"]
 [ext_resource type="Script" path="res://UI.gd" id="2_ftbj8"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://bp7dh72r2gerp" path="res://Sprites/Mine.png" id="3_yp40f"]
 [ext_resource type="Texture2D" uid="uid://cbd2sj0bijwq4" path="res://Sprites/Greenhouse.png" id="4_06mp5"]
 [ext_resource type="Texture2D" uid="uid://bnnlhx0jt2vse" path="res://Sprites/SolarPanel.png" id="5_ya1nm"]
+[ext_resource type="Texture2D" uid="uid://dpj4wk3atbotd" path="res://Sprites/Connector.png" id="7_wqgil"]
 
 [sub_resource type="Theme" id="Theme_i75d7"]
 default_font = ExtResource("1_0mx0y")
@@ -62,6 +63,10 @@ icon = ExtResource("4_06mp5")
 layout_mode = 2
 icon = ExtResource("5_ya1nm")
 
+[node name="ConnectorButton" type="Button" parent="BuildingButtons"]
+layout_mode = 2
+icon = ExtResource("7_wqgil")
+
 [node name="HeaderFoodMetal" type="Label" parent="."]
 layout_mode = 0
 offset_left = 368.0
@@ -116,3 +121,4 @@ text = "Turn 200"
 [connection signal="pressed" from="BuildingButtons/MineButton" to="." method="_on_mine_button_pressed"]
 [connection signal="pressed" from="BuildingButtons/GreenHouseButton" to="." method="_on_green_house_button_pressed"]
 [connection signal="pressed" from="BuildingButtons/SolarPanelButton" to="." method="_on_solar_panel_button_pressed"]
+[connection signal="pressed" from="BuildingButtons/ConnectorButton" to="." method="_on_connector_button_pressed"]

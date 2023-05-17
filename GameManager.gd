@@ -3,7 +3,7 @@ extends Node2D
 # current amount of each resource we have
 var curPeople : int = 10
 var curFood : int = 100
-var curMetal : int = 5
+var curMetal : int = 20
 var curEnergy : int = 20
 
 # amount of each resource we get each turn
@@ -43,7 +43,7 @@ func end_turn():
 	ui.on_end_turn()
 
 # called when we've selected a building to place
-func on_select_building (buildingType):
+func on_select_building(buildingType):
 	currentlyPlacingBuilding = true
 	buildingToPlace = buildingType
 	# highlight the tiles we can place a building on 
@@ -56,20 +56,25 @@ func place_building (tileToPlaceOn):
 	var texture : Texture
 	match buildingToPlace:
 		BuildingData.Buildings.MINE:
-			curMetal = curMetal - 1  
+			curMetal = curMetal - 4  
 			texture = BuildingData.mine.iconTexture
 			add_to_resource_per_turn(BuildingData.mine.prodResource, BuildingData.mine.prodResourceAmount)
 			add_to_resource_per_turn(BuildingData.mine.upkeepResource, -BuildingData.mine.upkeepResourceAmount)
 		BuildingData.Buildings.GREENHOUSE:
-			curMetal = curMetal - 1 
+			curMetal = curMetal - 3 
 			texture = BuildingData.greenhouse.iconTexture
 			add_to_resource_per_turn(BuildingData.greenhouse.prodResource, BuildingData.greenhouse.prodResourceAmount)
 			add_to_resource_per_turn(BuildingData.greenhouse.upkeepResource, -BuildingData.greenhouse.upkeepResourceAmount)
 		BuildingData.Buildings.SOLAR_PANEL:
-			curMetal = curMetal - 1 
+			curMetal = curMetal - 2 
 			texture = BuildingData.solarPanel.iconTexture
 			add_to_resource_per_turn(BuildingData.solarPanel.prodResource, BuildingData.solarPanel.prodResourceAmount)
 			add_to_resource_per_turn(BuildingData.solarPanel.upkeepResource, -BuildingData.solarPanel.upkeepResourceAmount)
+		BuildingData.Buildings.CONNECTOR:
+			curMetal = curMetal - 1 
+			texture = BuildingData.connector.iconTexture
+			add_to_resource_per_turn(BuildingData.connector.prodResource, BuildingData.connector.prodResourceAmount)
+			add_to_resource_per_turn(BuildingData.connector.upkeepResource, -BuildingData.connector.upkeepResourceAmount)
 		_:
 			printerr("unknown buildingToPlace in GameManger.place_building")	
 	# place the building on the map
