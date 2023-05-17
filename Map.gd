@@ -9,7 +9,6 @@ var tilesWithBuildings : Array
 # tiles with buildings to be checked if legal
 var tileHighlights : Array
 
-
 # size of a tile
 var tileSize : float = 64.0
 
@@ -34,27 +33,20 @@ func _ready ():
 			# remove trees and hills next to base
 			# (don't need null check, these must be in the middle of the map
 			for adjacent in adjacents:
-				get_tile_at_position2(allTiles[x].position + adjacent).reset()
-
+				get_tile_at_position(allTiles[x].position + adjacent).reset()
 
 
 # returns a tile at the given position - returns null if no tile is found
-#**** might have to remove allTiles[x].hasBuilding == false sometime?
-func get_tile_at_position(position):
-	# loop through all of the tiles
-	for x in range(allTiles.size()):
-		# if the tile matches our given position, return it
-		if allTiles[x].position == position and allTiles[x].hasBuilding == false:
-			return allTiles[x]
-	return null
-
-
-func get_tile_at_position2(position):
+func get_tile_at_position(position, building_check: bool = false):
 	# loop through all of the tiles
 	for x in range(allTiles.size()):
 		# if the tile matches our given position, return it
 		if allTiles[x].position == position:
-			return allTiles[x]
+			if building_check:
+				if allTiles[x].hasBuilding == false:
+					return allTiles[x]
+			else:
+				return allTiles[x]
 	return null
 
 
@@ -78,12 +70,19 @@ func highlight_available_tiles(building_to_place: int):
 			remove_highlights_next_to_terrain()
 		_:
 			print("unknown building in Map.remove_same_building_highlights(): ", building_to_place)			
-	
+	#check if tileHighlights is empty, then do error or repick building
 	for x in range(tileHighlights.size()):
 		tileHighlights[x].toggle_highlight(true)
 
 func remove_highlights_not_next_to_terrain(type: BuildingData.Buildings):
-	pass
+	if tileHighlights.size() < 1: return
+	for x in range(tileHighlights.size()-1, -1, -1):
+		var remove = true
+		for adjacent in adjacents:
+			var tile = get_tile_at_position(tileHighlights[x].position + adjacent)
+			if tile != null and tile.get_building_type() == type:
+				remove = false
+		if remove: tileHighlights.remove_at(x)
 
 func remove_highlights_next_to_terrain():
 	remove_same_building_highlights(BuildingData.Buildings.HILL)
@@ -94,14 +93,15 @@ func remove_same_building_highlights(building_to_place: int):
 	for x in range(tileHighlights.size()-1, -1, -1):
 		var remove = false
 		for adjacent in adjacents:
-			var tile = get_tile_at_position2(tileHighlights[x].position + adjacent)
+			var tile = get_tile_at_position(tileHighlights[x].position + adjacent)
 			if tile != null and tile.get_building_type() == building_to_place:
 				remove = true
 		if remove: tileHighlights.remove_at(x)
-		
+
+
 func get_tiles_next_to_buildings(x: int):
 	for adjacent in adjacents:
-		var tile = get_tile_at_position(tilesWithBuildings[x].position + adjacent)	
+		var tile = get_tile_at_position(tilesWithBuildings[x].position + adjacent, true)	
 		# if not null, add to highlight array - allowing us to build
 		if tile != null:
 			tileHighlights.append(tile)
@@ -111,7 +111,8 @@ func get_tiles_next_to_buildings(x: int):
 func disable_tile_highlights():
 	for x in range(allTiles.size()):
 		allTiles[x].toggle_highlight(false)
-		
+
+
 # places down a building on the map
 func place_building(tile, texture, buildingType):
 	if buildingType >= 0:   # don't add trees and hills
