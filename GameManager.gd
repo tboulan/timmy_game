@@ -19,6 +19,7 @@ var currentlyPlacingBuilding : bool = false
 # type of building we're currently placing
 var buildingToPlace : BuildingData.Buildings
 
+
 # components
 @onready var ui : Node = get_node("UI")
 @onready var map : Node = get_node("Tiles")
@@ -47,8 +48,11 @@ func on_select_building(buildingType):
 	currentlyPlacingBuilding = true
 	buildingToPlace = buildingType
 	# highlight the tiles we can place a building on 
-	# pass building type to prevent identical
-	map.highlight_available_tiles(buildingType) 
+	# pass building type to prevent identical	
+	if map.highlight_available_tiles(buildingType) == 0:
+		# no tiles were highlighted, so no legal placement
+		printerr("error - placing building not possible for building type ", buildingType, "...")
+		OS.alert('No legal placement for that building.\nLose a turn due to incompetence!', 'Building Placement Error')
 
 # called when we place a building down on the grid
 func place_building (tileToPlaceOn):

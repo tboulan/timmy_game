@@ -53,7 +53,7 @@ func get_tile_at_position(position, add_building_check: bool = false):
 
 
 # highlights the tiles we can place buildings on
-func highlight_available_tiles(building_to_place: int):
+func highlight_available_tiles(building_to_place: int) -> int:
 	tileHighlights.clear()
 	# loop through all of the tiles with buildings
 	for x in range(tilesWithBuildings.size()):
@@ -76,10 +76,11 @@ func highlight_available_tiles(building_to_place: int):
 		_:
 			print("unknown building in Map.remove_same_building_highlights(): ", building_to_place)			
 	
-	#check if tileHighlights is empty, then do error or repick building
 	for x in range(tileHighlights.size()):
 		tileHighlights[x].toggle_highlight(true)
 
+	#return number of tileHighlights for error checking
+	return tileHighlights.size()
 
 func remove_highlights_not_next_to_terrain(type: BuildingData.Buildings):
 	if tileHighlights.size() < 1: return
