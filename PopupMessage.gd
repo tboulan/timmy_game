@@ -33,4 +33,4 @@ func notify(_text):
 	$PopupPanel.set_as_minsize()
 	$PopupPanel.popup_centered() # Realignto center after resizing
 	$PopupPanel.rect_position.y = get_viewport_rect().size.y - GUTTER_OFFSET
-	$Anim.play("Fade")
+	#$Anim.play("Fade")
