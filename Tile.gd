@@ -16,6 +16,7 @@ var buildingType : BuildingData.Buildings = BuildingData.Buildings.NONE
 # components
 @onready var highlight : Sprite2D = get_node("Highlight")
 @onready var buildingIcon : Sprite2D = get_node("BuildingIcon")
+@onready var buildingFade : AnimationPlayer = get_node("BuildingFade")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -31,6 +32,11 @@ func toggle_highlight(toggle):
 # sets the tile's building texture to display it
 func place_building(buildingTexture, type):
 	hasBuilding = true
+	# don't fade in rocks/trees/base
+	var from_end : bool = true
+	if type > BuildingData.Buildings.BASE:
+		from_end = false
+	buildingFade.play("building_fade_in", -1, 1.0, from_end)
 	buildingIcon.texture = buildingTexture
 	buildingType = type
 	

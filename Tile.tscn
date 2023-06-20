@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://dm54a3ltwgecq"]
+[gd_scene load_steps=7 format=3 uid="uid://dm54a3ltwgecq"]
 
 [ext_resource type="Script" path="res://Tile.gd" id="1_6ujyx"]
 [ext_resource type="Texture2D" uid="uid://bc4wrtdk77rtb" path="res://Sprites/Ground.png" id="2_o0dl1"]
@@ -6,6 +6,27 @@
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lbruw"]
 size = Vector2(64, 64)
+
+[sub_resource type="Animation" id="Animation_j6tb7"]
+resource_name = "building_fade_in"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_y38jl"]
+_data = {
+"building_fade_in": SubResource("Animation_j6tb7")
+}
 
 [node name="Tile" type="Area2D"]
 script = ExtResource("1_6ujyx")
@@ -20,8 +41,15 @@ scale = Vector2(6.4, 6.4)
 texture = ExtResource("3_enp45")
 
 [node name="BuildingIcon" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_lbruw")
+
+[node name="BuildingFade" type="AnimationPlayer" parent="."]
+root_node = NodePath("../BuildingIcon")
+libraries = {
+"": SubResource("AnimationLibrary_y38jl")
+}
 
 [connection signal="input_event" from="." to="." method="_on_Tile_input_event"]
