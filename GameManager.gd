@@ -2,9 +2,9 @@ extends Node2D
 
 # current amount of each resource we have
 var curPeople : int = 10
-var curFood : int = 100
+var curFood : int = 50
 var curMetal : int = 20
-var curEnergy : int = 20
+var curEnergy : int = 15
 
 # amount of each resource we get each turn
 var foodPerTurn : int = 0
@@ -35,13 +35,49 @@ func end_turn():
 	curFood += foodPerTurn
 	curMetal += metalPerTurn
 	curEnergy += energyPerTurn
+	resourceMaximumsCheck()
 	# People eat food
 	curFood = curFood - curPeople
+	foodProblemsCheck()
+	peopleReproduceCheck()
 	# increase current turn
 	curTurn += 1
 	# update the UI
 	ui.update_resource_text()
 	ui.on_end_turn()
+	peoplePerTurn = 0 # reset to 0 if we reproduced this turn 
+
+
+func resourceMaximumsCheck():
+	if curFood > 99:
+		curFood = 99
+	if curMetal > 99:
+		curMetal = 99
+	if curEnergy > 99:
+		curEnergy = 99
+	if curPeople > 99:
+		# Add "You WIN Screen"
+		pass
+
+
+func peopleReproduceCheck():
+	var numberBetween1and100 = randi() % 100 + 1
+	printerr("reproduce check: curPeople: ", curPeople, " - number 1to100: ", numberBetween1and100)
+	if numberBetween1and100 <= curPeople:
+		curPeople += 1
+		peoplePerTurn = 1
+
+func foodProblemsCheck():
+	# if you run out of food up to half the people die
+	if curFood >= 0:
+		return
+	var numberDead = randi() % (curPeople / 2) + 1
+	var notification = str("we've run out of food, ", numberDead, " died!  But you do get ", numberDead, " more food.")
+	printerr(notification)
+	OS.alert(notification, 'People died from Starvation')
+	curPeople = curPeople - numberDead
+	curFood = numberDead
+
 
 # called when we've selected a building to place
 func on_select_building(buildingType):
