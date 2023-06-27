@@ -111,11 +111,21 @@ autowrap_mode = 1
 
 [node name="TurnText" type="Label" parent="."]
 layout_mode = 0
-offset_left = 878.0
-offset_top = 51.0
-offset_right = 1014.0
-offset_bottom = 90.0
-text = "Turn 200"
+offset_left = 986.0
+offset_top = 35.0
+offset_right = 1027.0
+offset_bottom = 110.0
+theme_override_colors/font_color = Color(0.74902, 0.470588, 0.329412, 1)
+text = "1"
+
+[node name="HeaderTurnText" type="Label" parent="."]
+offset_left = 865.0
+offset_top = 32.0
+offset_right = 969.0
+offset_bottom = 110.0
+text = "Year: Month:"
+horizontal_alignment = 2
+autowrap_mode = 2
 
 [connection signal="pressed" from="EndTurnButton" to="." method="_on_end_turn_button_pressed"]
 [connection signal="pressed" from="BuildingButtons/MineButton" to="." method="_on_mine_button_pressed"]

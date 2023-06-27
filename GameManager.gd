@@ -11,7 +11,7 @@ var foodPerTurn : int = 0
 var metalPerTurn : int = 0
 var energyPerTurn : int = 0
 var peoplePerTurn : int = 0
-var curTurn : int = 1
+var curTurn : int = 0 # 0 will display Year: 1, Month: 1
 
 # are we currently placing down a building?
 var currentlyPlacingBuilding : bool = false
@@ -62,7 +62,7 @@ func resourceMaximumsCheck():
 
 func peopleReproduceCheck():
 	var numberBetween1and100 = randi() % 100 + 1
-	printerr("reproduce check: curPeople: ", curPeople, " - number 1to100: ", numberBetween1and100)
+	#printerr("reproduce check: curPeople: ", curPeople, " - number 1to100: ", numberBetween1and100)
 	if numberBetween1and100 <= curPeople:
 		curPeople += 1
 		peoplePerTurn = 1

@@ -17,8 +17,9 @@ extends Control
 
 # called when a turn is over - resets the UI
 func on_end_turn():
-	# updates the cur turn text and enable the building buttons
-	curTurnText.text = "Turn: " + str(gameManager.curTurn)
+	# updates the cur turn text (year/month) and enable the building buttons
+	curTurnText.text = str(gameManager.curTurn / 12 + 1) + "\n" + str(gameManager.curTurn % 12 + 1)
+	printerr(gameManager.curTurn/12+1,",",gameManager.curTurn%12+1," - turn: ",gameManager.curTurn)
 	buildingButtons.visible = true
 
 # updates the resource text to show the current values
@@ -26,9 +27,11 @@ func update_resource_text():
 	# set the food and metal text
 	var foodMetal = ""
 	# sets the text, e.g. "13 (+5)"
-	foodMetal += str(gameManager.curFood) + " (" + ("+" if gameManager.foodPerTurn >= 0 else "") + str(gameManager.foodPerTurn) + ")"
+	foodMetal += str(gameManager.curFood) + " (" + ("+" if gameManager.foodPerTurn >= 0 else "") \
+		+ str(gameManager.foodPerTurn) + ")"
 	foodMetal += "\n"
-	foodMetal += str(gameManager.curMetal) + " (" + ("+" if gameManager.metalPerTurn >= 0 else "") + str(gameManager.metalPerTurn) + ")"  
+	foodMetal += str(gameManager.curMetal) + " (" + ("+" if gameManager.metalPerTurn >= 0 else "") \
+		+ str(gameManager.metalPerTurn) + ")"  
 	foodMetalText.text = foodMetal
 
 	# set the oxygen and energy text
