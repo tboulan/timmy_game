@@ -35,11 +35,12 @@ func end_turn():
 	curFood += foodPerTurn
 	curMetal += metalPerTurn
 	curEnergy += energyPerTurn
-	resourceMaximumsCheck()
+	resource_maximums_check()
 	# People eat food
 	curFood = curFood - curPeople
-	foodProblemsCheck()
-	peopleReproduceCheck()
+	food_problems_check()
+	people_reproduce_check()
+	map.trees_depleted_check()   # Tress next to food vats may be expended
 	# increase current turn
 	curTurn += 1
 	# update the UI
@@ -48,7 +49,7 @@ func end_turn():
 	peoplePerTurn = 0 # reset to 0 if we reproduced this turn 
 
 
-func resourceMaximumsCheck():
+func resource_maximums_check():
 	if curFood > 99:
 		curFood = 99
 	if curMetal > 99:
@@ -60,14 +61,14 @@ func resourceMaximumsCheck():
 		pass
 
 
-func peopleReproduceCheck():
+func people_reproduce_check():
 	var numberBetween1and100 = randi() % 100 + 1
 	#printerr("reproduce check: curPeople: ", curPeople, " - number 1to100: ", numberBetween1and100)
 	if numberBetween1and100 <= curPeople:
 		curPeople += 1
 		peoplePerTurn = 1
 
-func foodProblemsCheck():
+func food_problems_check():
 	# if you run out of food up to half the people die
 	if curFood >= 0:
 		return

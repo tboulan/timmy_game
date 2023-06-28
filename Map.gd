@@ -50,10 +50,19 @@ func get_tile_at_position(position, add_building_check: bool = false):
 			else:
 				return allTiles[x]
 	return null
+	
+func get_all_tiles_of_type(type: BuildingData.Buildings):
+	pass
 
+func trees_depleted_check():
+	# find trees next to food vat
+	
+	# print that one trees resource path
+	#print($Sprite.texture.resource_path)
+	pass
 
 # highlights the tiles we can place buildings on
-func highlight_available_tiles(building_to_place: int) -> int:
+func highlight_available_tiles(building_to_place: BuildingData.Buildings) -> int:
 	tileHighlights.clear()
 	# loop through all of the tiles with buildings
 	for x in range(tilesWithBuildings.size()):
@@ -81,6 +90,7 @@ func highlight_available_tiles(building_to_place: int) -> int:
 
 	#return number of tileHighlights for error checking
 	return tileHighlights.size()
+
 
 func remove_highlights_not_next_to_terrain(type: BuildingData.Buildings):
 	if tileHighlights.size() < 1: return
