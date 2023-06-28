@@ -19,7 +19,6 @@ extends Control
 func on_end_turn():
 	# updates the cur turn text (year/month) and enable the building buttons
 	curTurnText.text = str(gameManager.curTurn / 12 + 1) + "\n" + str(gameManager.curTurn % 12 + 1)
-	printerr(gameManager.curTurn/12+1,",",gameManager.curTurn%12+1," - turn: ",gameManager.curTurn)
 	buildingButtons.visible = true
 
 # updates the resource text to show the current values

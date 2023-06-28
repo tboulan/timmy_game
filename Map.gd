@@ -32,7 +32,6 @@ func _ready ():
 			place_building(allTiles[x], BuildingData.base.iconTexture, BuildingData.Buildings.BASE)
 			# remove trees and hills right next to base
 			# (don't need null check, these must be in the middle of the map
-			print("Base location: ", allTiles[x].position / Vector2(64, 64) + Vector2(.5, .5))
 			for adjacent in adjacents:
 				get_tile_at_position(allTiles[x].position + adjacent).reset()
 			break # don't have to search remaining tiles
@@ -51,15 +50,23 @@ func get_tile_at_position(position, add_building_check: bool = false):
 				return allTiles[x]
 	return null
 	
-func get_all_tiles_of_type(type: BuildingData.Buildings):
+func _get_all_tiles_of_type(type: BuildingData.Buildings):
+	# could use this to make trees/hills depleted_check smaller
 	pass
 
 func trees_depleted_check():
 	# find trees next to food vat
-	
+	var treeTile = null
+	for x in range(tilesWithBuildings.size()):
+		#can't place same building next to each other
+		if tilesWithBuildings[x].get_building_type() == BuildingData.Buildings.GREENHOUSE:
+			for adjacent in adjacents:
+				var tile = get_tile_at_position(tilesWithBuildings[x].position + adjacent)
+				if tile != null and tile.get_building_type() == BuildingData.Buildings.TREE:
+					treeTile = tile
 	# print that one trees resource path
-	#print($Sprite.texture.resource_path)
-	pass
+	if treeTile != null:
+		print(treeTile.buildingIcon.texture.resource_path)    #.texture.resource_path)
 
 # highlights the tiles we can place buildings on
 func highlight_available_tiles(building_to_place: BuildingData.Buildings) -> int:
