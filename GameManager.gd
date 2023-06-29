@@ -40,7 +40,7 @@ func end_turn():
 	curFood = curFood - curPeople
 	food_problems_check()
 	people_reproduce_check()
-	map.trees_depleted_check()   # Tress next to food vats may be expended
+	map.trees_hills_depleted_check()   # Tress next to food vats may be expended
 	# increase current turn
 	curTurn += 1
 	# update the UI
@@ -72,7 +72,7 @@ func food_problems_check():
 	# if you run out of food up to half the people die
 	if curFood >= 0:
 		return
-	var numberDead = randi() % (curPeople / 2) + 1  #warning-ignore:integer_division
+	var numberDead : int = randi() % ceil(float(curPeople) / 2) + 1
 	var warning = str("we've run out of food, ", numberDead, " died!  But you do get ", numberDead, " more food.")
 	printerr(warning)
 	OS.alert(warning, 'People died from Starvation')

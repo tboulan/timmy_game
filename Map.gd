@@ -49,27 +49,44 @@ func get_tile_at_position(position, add_building_check: bool = false):
 			else:
 				return allTiles[x]
 	return null
-	
-func _get_all_tiles_of_type(type: BuildingData.Buildings):
-	# could use this to make trees/hills depleted_check smaller
-	pass
 
-func trees_depleted_check():
-	# find trees next to food vat
-	var treeTile = null
+
+func get_x_tiles_next_to_y(building: BuildingData.Buildings, terrain: BuildingData.Buildings) -> Array:
+	# could use this to make trees/hills depleted_check smaller
+	var foundTiles: Array = []
 	for x in range(tilesWithBuildings.size()):
-		#can't place same building next to each other
-		if tilesWithBuildings[x].get_building_type() == BuildingData.Buildings.GREENHOUSE:
+		if tilesWithBuildings[x].get_building_type() == building and \
+			tilesWithBuildings[x].isWorking == true:
 			for adjacent in adjacents:
 				var tile = get_tile_at_position(tilesWithBuildings[x].position + adjacent)
-				if tile != null and tile.get_building_type() == BuildingData.Buildings.TREE:
-					treeTile = tile
-	# print that one trees resource path
-	if treeTile != null:
-		print(treeTile.buildingIcon.texture.resource_path)    #.texture.resource_path)
+				if tile != null and tile.get_building_type() == terrain:
+					foundTiles.append(tile)
+					break  # finding one is enough
+	return foundTiles
 
-# highlights the tiles we can place buildings on
+
+func trees_hills_depleted_check():
+	# find trees next to food vat
+	var tiles = get_x_tiles_next_to_y(BuildingData.Buildings.GREENHOUSE, BuildingData.Buildings.TREE)
+	print("Start trees depleted check")
+	for x in range(tiles.size()):
+		var rand = randi() % 5
+		print("   x: ", tiles[x].position.x/64+.5, "  y: ", tiles[x].position.y/64+.5, \
+			"   res: ", tiles[x].buildingIcon.texture.resource_path, "  rand: ", rand) 
+		if rand == 0:
+			# depleted, replace image with deleted (d) version
+			#var texture = ImageTexture.create_from_image( \
+			#	Image.load_from_file( \
+			#	tiles[x].buildingIcon.texture.resource_path.replace(".png", "d.png")))
+			#tiles[x].buildingIcon.texture = texture
+			#preload("res://Sprites/Greenhouse.png")
+			remove_building(tiles[x], \
+				load(tiles[x].buildingIcon.texture.resource_path.replace(".png", "d.png")), \
+				BuildingData.Buildings.NONE)
+			
+
 func highlight_available_tiles(building_to_place: BuildingData.Buildings) -> int:
+	# highlights the tiles we can place buildings on
 	tileHighlights.clear()
 	# loop through all of the tiles with buildings
 	for x in range(tilesWithBuildings.size()):
@@ -145,6 +162,12 @@ func place_building(tile, texture, buildingType):
 	tile.place_building(texture, buildingType)
 	disable_tile_highlights()
 
+
+#remove a buildig from the map
+func remove_building(tile, texture, buildingType):
+	tilesWithBuildings.erase(tile)
+	tile.place_building(texture, buildingType, false)
+	
 
 func place_random_trees_and_hills():
 	# Three different looking trees to be picked at random

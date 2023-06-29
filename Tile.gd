@@ -4,6 +4,9 @@ extends Area2D
 # a Base building will be placed here at the start of the game
 @export var startTile = false
 
+# has something caused this building to stop working?
+@export var isWorking : bool = true
+
 # do we have a building on this tile?
 var hasBuilding : bool = false
 
@@ -14,9 +17,10 @@ var canPlaceBuilding : bool = false
 var buildingType : BuildingData.Buildings = BuildingData.Buildings.NONE
 
 # components
-@onready var highlight : Sprite2D = get_node("Highlight")
-@onready var buildingIcon : Sprite2D = get_node("BuildingIcon")
-@onready var buildingFade : AnimationPlayer = get_node("BuildingFade")
+@onready var highlight: Sprite2D = get_node("Highlight")
+@onready var buildingIcon: Sprite2D = get_node("BuildingIcon")
+@onready var buildingFade: AnimationPlayer = get_node("BuildingFade")
+@onready var turnRed: AnimationPlayer = get_node("RedAlert")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -30,15 +34,17 @@ func toggle_highlight(toggle):
 	
 	# called when a building is placed on the tile
 # sets the tile's building texture to display it
-func place_building(buildingTexture, type):
-	hasBuilding = true
-	# don't fade in rocks/trees/base
+func place_building(buildingTexture, type, addbuilding=true):
+	hasBuilding = addbuilding
+	# don't fade in base/rocks/trees
 	var from_end : bool = true
 	if type > BuildingData.Buildings.BASE:
 		from_end = false
 	buildingFade.play("building_fade_in", -1, 1.0, from_end)
 	buildingIcon.texture = buildingTexture
 	buildingType = type
+	#if type == BuildingData.Buildings.BASE:
+	#	turnRed.play("red_alert")
 	
 func get_building_type() -> BuildingData.Buildings:
 	return buildingType
