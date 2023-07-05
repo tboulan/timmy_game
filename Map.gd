@@ -1,5 +1,10 @@
 extends Node
 
+# for printing grid tile X and Y
+# print("   x: ", tiles[x].position.x/64+.5, "  y: ", tiles[x].position.y/64+.5, \
+#    res: ", tiles[x].buildingIcon.texture.resource_path, "  rand: ", rand) 
+
+
 # all the tiles in the game
 var allTiles : Array
 
@@ -66,24 +71,25 @@ func get_x_tiles_next_to_y(building: BuildingData.Buildings, terrain: BuildingDa
 
 
 func trees_hills_depleted_check():
+	# trees depletion check
 	# find trees next to food vat
 	var tiles = get_x_tiles_next_to_y(BuildingData.Buildings.GREENHOUSE, BuildingData.Buildings.TREE)
-	print("Start trees depleted check")
 	for x in range(tiles.size()):
-		var rand = randi() % 5
-		print("   x: ", tiles[x].position.x/64+.5, "  y: ", tiles[x].position.y/64+.5, \
-			"   res: ", tiles[x].buildingIcon.texture.resource_path, "  rand: ", rand) 
-		if rand == 0:
-			# depleted, replace image with deleted (d) version
-			#var texture = ImageTexture.create_from_image( \
-			#	Image.load_from_file( \
-			#	tiles[x].buildingIcon.texture.resource_path.replace(".png", "d.png")))
-			#tiles[x].buildingIcon.texture = texture
-			#preload("res://Sprites/Greenhouse.png")
+		var rand = randi() % 100 
+		if rand == 0:  # 1% chance of delpletion
 			remove_building(tiles[x], \
 				load(tiles[x].buildingIcon.texture.resource_path.replace(".png", "d.png")), \
 				BuildingData.Buildings.NONE)
-			
+	# hills depletion check
+	# find trees next to food vat
+	tiles = get_x_tiles_next_to_y(BuildingData.Buildings.MINE, BuildingData.Buildings.HILL)
+	for x in range(tiles.size()):
+		var rand = randi() % 100 
+		if rand == 0:  # 1% chance of delpletion
+			remove_building(tiles[x], \
+				load(tiles[x].buildingIcon.texture.resource_path.replace(".png", "d.png")), \
+				BuildingData.Buildings.NONE)
+				
 
 func highlight_available_tiles(building_to_place: BuildingData.Buildings) -> int:
 	# highlights the tiles we can place buildings on
