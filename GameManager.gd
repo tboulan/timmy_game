@@ -72,7 +72,7 @@ func food_problems_check():
 	# if you run out of food up to half the people die
 	if curFood >= 0:
 		return
-	var numberDead : int = randi() % curPeople / 2 + 1
+	var numberDead : int = int(randi() % curPeople / 2.0) + 1
 	var warning = str("we've run out of food, ", numberDead, " died!  But you do get ", numberDead, " more food.")
 	printerr(warning)
 	OS.alert(warning, 'People died from Starvation')
@@ -95,49 +95,57 @@ func on_select_building(buildingType):
 func not_enough_metal_for_building():
 	printerr("user error -not enough metal for ", buildingToPlace)
 	OS.alert('Not enough metal for that building.\nLose a turn due to incompetence!', 'Low on Metal')
-	
+
 
 # called when we place a building down on the grid
 func place_building (tileToPlaceOn):
 	currentlyPlacingBuilding = false
 	var texture : Texture
+	var enoughResources : bool = true
 	match buildingToPlace:
 		BuildingData.Buildings.MINE:
-			if curMetal < 4: 
+			if curMetal < 4:
+				enoughResources = false
 				not_enough_metal_for_building()
-				return
-			curMetal = curMetal - 4  
-			texture = BuildingData.mine.iconTexture
-			add_to_resource_per_turn(BuildingData.mine.prodResource, BuildingData.mine.prodResourceAmount)
-			add_to_resource_per_turn(BuildingData.mine.upkeepResource, -BuildingData.mine.upkeepResourceAmount)
+			else:	
+				curMetal = curMetal - 4  
+				texture = BuildingData.mine.iconTexture
+				add_to_resource_per_turn(BuildingData.mine.prodResource, BuildingData.mine.prodResourceAmount)
+				add_to_resource_per_turn(BuildingData.mine.upkeepResource, -BuildingData.mine.upkeepResourceAmount)
 		BuildingData.Buildings.GREENHOUSE:
-			if curMetal < 3: 
+			if curMetal < 3:
+				enoughResources = false
 				not_enough_metal_for_building()
-				return
-			curMetal = curMetal - 3 
-			texture = BuildingData.greenhouse.iconTexture
-			add_to_resource_per_turn(BuildingData.greenhouse.prodResource, BuildingData.greenhouse.prodResourceAmount)
-			add_to_resource_per_turn(BuildingData.greenhouse.upkeepResource, -BuildingData.greenhouse.upkeepResourceAmount)
+			else:
+				curMetal = curMetal - 3 
+				texture = BuildingData.greenhouse.iconTexture
+				add_to_resource_per_turn(BuildingData.greenhouse.prodResource, BuildingData.greenhouse.prodResourceAmount)
+				add_to_resource_per_turn(BuildingData.greenhouse.upkeepResource, -BuildingData.greenhouse.upkeepResourceAmount)
 		BuildingData.Buildings.SOLAR_PANEL:
-			if curMetal < 2: 
+			if curMetal < 2:
+				enoughResources = false
 				not_enough_metal_for_building()
-				return
-			curMetal = curMetal - 2 
-			texture = BuildingData.solarPanel.iconTexture
-			add_to_resource_per_turn(BuildingData.solarPanel.prodResource, BuildingData.solarPanel.prodResourceAmount)
-			add_to_resource_per_turn(BuildingData.solarPanel.upkeepResource, -BuildingData.solarPanel.upkeepResourceAmount)
+			else:	
+				curMetal = curMetal - 2 
+				texture = BuildingData.solarPanel.iconTexture
+				add_to_resource_per_turn(BuildingData.solarPanel.prodResource, BuildingData.solarPanel.prodResourceAmount)
+				add_to_resource_per_turn(BuildingData.solarPanel.upkeepResource, -BuildingData.solarPanel.upkeepResourceAmount)
 		BuildingData.Buildings.CONNECTOR:
-			if curMetal < 1: 
+			if curMetal < 1:
+				enoughResources = false
 				not_enough_metal_for_building()
-				return			
-			curMetal = curMetal - 1 
-			texture = BuildingData.connector.iconTexture
-			add_to_resource_per_turn(BuildingData.connector.prodResource, BuildingData.connector.prodResourceAmount)
-			add_to_resource_per_turn(BuildingData.connector.upkeepResource, -BuildingData.connector.upkeepResourceAmount)
+			else:	
+				curMetal = curMetal - 1 
+				texture = BuildingData.connector.iconTexture
+				add_to_resource_per_turn(BuildingData.connector.prodResource, BuildingData.connector.prodResourceAmount)
+				add_to_resource_per_turn(BuildingData.connector.upkeepResource, -BuildingData.connector.upkeepResourceAmount)
 		_:
 			printerr("unknown buildingToPlace in GameManger.place_building")	
 	# place the building on the map
-	map.place_building(tileToPlaceOn, texture, buildingToPlace)
+	if enoughResources:
+		map.place_building(tileToPlaceOn, texture, buildingToPlace)
+	else: 
+		map.disable_tile_highlights()	
 	# update the UI to show changes immediately
 	ui.update_resource_text()
 

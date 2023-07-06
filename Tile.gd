@@ -32,7 +32,7 @@ func toggle_highlight(toggle):
 	highlight.visible = toggle
 	canPlaceBuilding = toggle
 	
-	# called when a building is placed on the tile
+# called when a building is placed on the tile
 # sets the tile's building texture to display it
 func place_building(buildingTexture, type, addbuilding=true):
 	hasBuilding = addbuilding
