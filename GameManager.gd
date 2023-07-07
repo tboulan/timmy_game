@@ -19,15 +19,16 @@ var currentlyPlacingBuilding : bool = false
 # type of building we're currently placing
 var buildingToPlace : BuildingData.Buildings
 
-
 # components
 @onready var ui : Node = get_node("UI")
 @onready var map : Node = get_node("Tiles")
+
 
 func _ready():
 	# updates the UI when the game starts
 	ui.update_resource_text()
 	ui.on_end_turn()
+
 
 # called when the player ends the turn
 func end_turn():
@@ -68,6 +69,7 @@ func people_reproduce_check():
 		curPeople += 1
 		peoplePerTurn = 1
 
+
 func food_problems_check():
 	# if you run out of food up to half the people die
 	if curFood >= 0:
@@ -93,7 +95,7 @@ func on_select_building(buildingType):
 
 
 func not_enough_metal_for_building():
-	printerr("user error -not enough metal for ", buildingToPlace)
+	#printerr("user error -not enough metal for ", buildingToPlace)
 	OS.alert('Not enough metal for that building.\nLose a turn due to incompetence!', 'Low on Metal')
 
 
