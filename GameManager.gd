@@ -40,6 +40,7 @@ func end_turn():
 	# People eat food
 	curFood = curFood - curPeople
 	food_problems_check()
+	energy_problems_check()
 	people_reproduce_check()
 	map.trees_hills_depleted_check()   # Tress next to food vats may be expended
 	# increase current turn
@@ -48,6 +49,15 @@ func end_turn():
 	ui.update_resource_text()
 	ui.on_end_turn()
 	peoplePerTurn = 0 # reset to 0 if we reproduced this turn 
+
+
+func energy_problems_check():
+	# if energy is less than zero, shut off some buildings
+	if curEnergy >= 0: return
+	print("Energy less than zero! number of buildings to turn off ", abs(curEnergy))
+	var number = map.disable_random_mines_and_greenhouses(abs(curEnergy))
+	print("Turned off ", number, " building(s)")
+	curEnergy = 0  # reset energey to zero
 
 
 func resource_maximums_check():

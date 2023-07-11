@@ -61,7 +61,7 @@ func get_x_tiles_next_to_y(building: BuildingData.Buildings, terrain: BuildingDa
 	var foundTiles: Array = []
 	for x in range(tilesWithBuildings.size()):
 		if tilesWithBuildings[x].get_building_type() == building and \
-			tilesWithBuildings[x].isWorking == true:
+			tilesWithBuildings[x].hasPower == true:
 			for adjacent in adjacents:
 				var tile = get_tile_at_position(tilesWithBuildings[x].position + adjacent)
 				if tile != null and tile.get_building_type() == terrain:
@@ -157,8 +157,8 @@ func get_tiles_next_to_buildings(x: int):
 
 # disables all of the tile highlights
 func disable_tile_highlights():
-	for x in range(allTiles.size()):
-		allTiles[x].toggle_highlight(false)
+	for i in range(allTiles.size()):
+		allTiles[i].toggle_highlight(false)
 
 
 # places down a building on the map
@@ -169,7 +169,30 @@ func place_building(tile, texture, buildingType):
 	disable_tile_highlights()
 
 
-#remove a buildig from the map
+# filter for finding working mines and greenhouses
+func working_m_and_g(tile):
+	return ((tile.buildingType == BuildingData.Buildings.GREENHOUSE or 
+		tile.buildingType == BuildingData.Buildings.GREENHOUSE) and 
+		tile.hasPower)
+
+func disable_random_mines_and_greenhouses(number: int) -> int:
+	var tile 
+	var m_and_g: Array
+	m_and_g = tilesWithBuildings.filter(working_m_and_g)
+	print("m_and_g size: ", m_and_g.size())
+	if m_and_g.size() < number:
+		# not enough buildings to turm off, turn off all of them
+		number = m_and_g.size()
+	for i in range(number):
+		tile = m_and_g.pick_random()
+		tile.hasPower = false
+		tile.turnRed.play("red_alert")
+		print("   x: ", tile.position.x/64+.5, "  y: ", tile.position.y/64+.5, \
+			"res: ", tile.buildingIcon.texture.resource_path) 
+		# subtract food or metal here
+	return number
+
+#remove a building from the map
 func remove_building(tile, texture, buildingType):
 	tilesWithBuildings.erase(tile)
 	tile.place_building(texture, buildingType, false)

@@ -5,7 +5,7 @@ extends Area2D
 @export var startTile = false
 
 # has something caused this building to stop working?
-@export var isWorking : bool = true
+var hasPower : bool = true
 
 # do we have a building on this tile?
 var hasBuilding : bool = false
