@@ -4,7 +4,6 @@ extends Node
 # print("   x: ", tiles[x].position.x/64+.5, "  y: ", tiles[x].position.y/64+.5, \
 #    res: ", tiles[x].buildingIcon.texture.resource_path, "  rand: ", rand) 
 
-
 # all the tiles in the game
 var allTiles : Array
 
@@ -175,7 +174,27 @@ func working_m_and_g(tile):
 		tile.buildingType == BuildingData.Buildings.GREENHOUSE) and 
 		tile.hasPower)
 
-func disable_random_mines_and_greenhouses(number: int) -> int:
+
+# filter for finding mines and greenhouses turned off due to no power
+func no_power_m_and_g(tile):
+	return ((tile.buildingType == BuildingData.Buildings.GREENHOUSE or 
+		tile.buildingType == BuildingData.Buildings.GREENHOUSE) and 
+		!tile.hasPower)
+
+
+func enable_mines_and_greenhouses():
+	var m_and_g: Array
+	var tile 
+	m_and_g = tilesWithBuildings.filter(no_power_m_and_g)
+	for i in m_and_g:
+		tile = m_and_g[i]
+		tile.hasPower = true
+		tile.turnRed.stop(true)  #play("red_alert")
+
+
+func disable_random_mines_and_greenhouses(number: int) ->  Dictionary:
+	#if low on power, shut down some buildings
+	var dict = {"buildings_disabled":0, "minusFood":0, "minusMedtal":0}
 	var tile 
 	var m_and_g: Array
 	m_and_g = tilesWithBuildings.filter(working_m_and_g)
@@ -183,14 +202,20 @@ func disable_random_mines_and_greenhouses(number: int) -> int:
 	if m_and_g.size() < number:
 		# not enough buildings to turm off, turn off all of them
 		number = m_and_g.size()
+	m_and_g.shuffle()
 	for i in range(number):
-		tile = m_and_g.pick_random()
+		tile = m_and_g[i]
 		tile.hasPower = false
 		tile.turnRed.play("red_alert")
 		print("   x: ", tile.position.x/64+.5, "  y: ", tile.position.y/64+.5, \
 			"res: ", tile.buildingIcon.texture.resource_path) 
 		# subtract food or metal here
-	return number
+		match tile.buildingType:
+			BuildingData.Buildings.MINE:
+				dict["minusMetal"] += 1
+			BuildingData.Buildings.GREENHOUSE:
+				dict["minusFood"] += 2	
+	return dict
 
 #remove a building from the map
 func remove_building(tile, texture, buildingType):
