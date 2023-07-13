@@ -17,7 +17,7 @@ var curTurn : int = 0 # 0 will display Year: 1, Month: 1
 var currentlyPlacingBuilding : bool = false
 
 # type of building we're currently placing
-var buildingToPlace : BuildingData.Buildings
+var buildingToPlace : Data.Buildings
 
 # components
 @onready var ui : Node = get_node("UI")
@@ -40,7 +40,7 @@ func end_turn():
 	# People eat food
 	curFood = curFood - curPeople
 	food_problems_check()
-	energy_problems_check()
+	#energy_problems_check()
 	people_reproduce_check()
 	map.trees_hills_depleted_check()   # Tress next to food vats may be expended
 	# increase current turn
@@ -51,11 +51,11 @@ func end_turn():
 	peoplePerTurn = 0 # reset to 0 if we reproduced this turn 
 
 
-func energy_problems_check():
+func _energy_problems_check():
 	# if energy is less than zero, shut off some buildings
 	if curEnergy >= 0: return
 	print("Energy less than zero! number of buildings to turn off ", abs(curEnergy))
-	var number = map.disable_random_mines_and_greenhouses(abs(curEnergy))
+	var number = map.disable_random_mines_and_vats(abs(curEnergy))
 	print("Turned off ", number, " building(s)")
 	curEnergy = 0  # reset energey to zero
 
@@ -100,12 +100,10 @@ func on_select_building(buildingType):
 	# pass building type to prevent identical	
 	if map.highlight_available_tiles(buildingType) == 0:
 		# no tiles were highlighted, so no legal placement
-		printerr("user error - placing building not possible for building type ", buildingType)
 		OS.alert('No legal placement for that building.\nLose a turn due to incompetence!', 'Building Placement Error')
 
 
 func not_enough_metal_for_building():
-	#printerr("user error -not enough metal for ", buildingToPlace)
 	OS.alert('Not enough metal for that building.\nLose a turn due to incompetence!', 'Low on Metal')
 
 
@@ -115,42 +113,42 @@ func place_building (tileToPlaceOn):
 	var texture : Texture
 	var enoughResources : bool = true
 	match buildingToPlace:
-		BuildingData.Buildings.MINE:
+		Data.Buildings.MINE:
 			if curMetal < 4:
 				enoughResources = false
 				not_enough_metal_for_building()
 			else:	
 				curMetal = curMetal - 4  
-				texture = BuildingData.mine.iconTexture
-				add_to_resource_per_turn(BuildingData.mine.prodResource, BuildingData.mine.prodResourceAmount)
-				add_to_resource_per_turn(BuildingData.mine.upkeepResource, -BuildingData.mine.upkeepResourceAmount)
-		BuildingData.Buildings.GREENHOUSE:
+				texture = Data.mine.iconTexture
+				add_to_resource_per_turn(Data.mine.prodResource, Data.mine.prodResourceAmount)
+				add_to_resource_per_turn(Data.mine.upkeepResource, -Data.mine.upkeepResourceAmount)
+		Data.Buildings.VATS:
 			if curMetal < 3:
 				enoughResources = false
 				not_enough_metal_for_building()
 			else:
 				curMetal = curMetal - 3 
-				texture = BuildingData.greenhouse.iconTexture
-				add_to_resource_per_turn(BuildingData.greenhouse.prodResource, BuildingData.greenhouse.prodResourceAmount)
-				add_to_resource_per_turn(BuildingData.greenhouse.upkeepResource, -BuildingData.greenhouse.upkeepResourceAmount)
-		BuildingData.Buildings.SOLAR_PANEL:
+				texture = Data.vats.iconTexture
+				add_to_resource_per_turn(Data.vats.prodResource, Data.vats.prodResourceAmount)
+				add_to_resource_per_turn(Data.vats.upkeepResource, -Data.vats.upkeepResourceAmount)
+		Data.Buildings.SOLAR:
 			if curMetal < 2:
 				enoughResources = false
 				not_enough_metal_for_building()
 			else:	
 				curMetal = curMetal - 2 
-				texture = BuildingData.solarPanel.iconTexture
-				add_to_resource_per_turn(BuildingData.solarPanel.prodResource, BuildingData.solarPanel.prodResourceAmount)
-				add_to_resource_per_turn(BuildingData.solarPanel.upkeepResource, -BuildingData.solarPanel.upkeepResourceAmount)
-		BuildingData.Buildings.CONNECTOR:
+				texture = Data.solar.iconTexture
+				add_to_resource_per_turn(Data.solar.prodResource, Data.solar.prodResourceAmount)
+				add_to_resource_per_turn(Data.solar.upkeepResource, -Data.solar.upkeepResourceAmount)
+		Data.Buildings.CONNECTOR:
 			if curMetal < 1:
 				enoughResources = false
 				not_enough_metal_for_building()
 			else:	
 				curMetal = curMetal - 1 
-				texture = BuildingData.connector.iconTexture
-				add_to_resource_per_turn(BuildingData.connector.prodResource, BuildingData.connector.prodResourceAmount)
-				add_to_resource_per_turn(BuildingData.connector.upkeepResource, -BuildingData.connector.upkeepResourceAmount)
+				texture = Data.connector.iconTexture
+				add_to_resource_per_turn(Data.connector.prodResource, Data.connector.prodResourceAmount)
+				add_to_resource_per_turn(Data.connector.upkeepResource, -Data.connector.upkeepResourceAmount)
 		_:
 			printerr("unknown buildingToPlace in GameManger.place_building")	
 	# place the building on the map
@@ -163,15 +161,14 @@ func place_building (tileToPlaceOn):
 
 # adds an amount to a certain resource per turn
 func add_to_resource_per_turn(resource, amount):
-	# resource 0 means none, so return
 	match resource:
-		BuildingData.Resources.NONE:
+		Data.Resources.NONE:
 			return
-		BuildingData.Resources.FOOD:
+		Data.Resources.FOOD:
 			foodPerTurn += amount
-		BuildingData.Resources.METAL:
+		Data.Resources.METAL:
 			metalPerTurn += amount
-		BuildingData.Resources.ENERGY:
+		Data.Resources.ENERGY:
 			energyPerTurn += amount
 		_:
 			printerr("unknown resource in GameManger.add_to_resource_per_turn")	

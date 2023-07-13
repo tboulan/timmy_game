@@ -33,7 +33,7 @@ func _ready ():
 	for x in range(allTiles.size()):
 		if allTiles[x].startTile == true:
 			# Base building
-			place_building(allTiles[x], BuildingData.base.iconTexture, BuildingData.Buildings.BASE)
+			place_building(allTiles[x], Data.base.iconTexture, Data.Buildings.BASE)
 			# remove trees and hills right next to base
 			# (don't need null check, these must be in the middle of the map
 			for adjacent in adjacents:
@@ -48,14 +48,14 @@ func get_tile_at_position(position, add_building_check: bool = false):
 		# if the tile matches our given position, return it
 		if allTiles[x].position == position:
 			if add_building_check:
-				if allTiles[x].hasBuilding == false:
+				if allTiles[x].buildingType == Data.Buildings.NONE:
 					return allTiles[x]
 			else:
 				return allTiles[x]
 	return null
 
 
-func get_x_tiles_next_to_y(building: BuildingData.Buildings, terrain: BuildingData.Buildings) -> Array:
+func get_x_tiles_next_to_y(building: Data.Buildings, terrain: Data.Buildings) -> Array:
 	# could use this to make trees/hills depleted_check smaller
 	var foundTiles: Array = []
 	for x in range(tilesWithBuildings.size()):
@@ -72,25 +72,25 @@ func get_x_tiles_next_to_y(building: BuildingData.Buildings, terrain: BuildingDa
 func trees_hills_depleted_check():
 	# trees depletion check
 	# find trees next to food vat
-	var tiles = get_x_tiles_next_to_y(BuildingData.Buildings.GREENHOUSE, BuildingData.Buildings.TREE)
+	var tiles = get_x_tiles_next_to_y(Data.Buildings.VATS, Data.Buildings.TREE)
 	for x in range(tiles.size()):
 		var rand = randi() % 100 
 		if rand == 0:  # 1% chance of delpletion
 			remove_building(tiles[x], \
 				load(tiles[x].buildingIcon.texture.resource_path.replace(".png", "d.png")), \
-				BuildingData.Buildings.NONE)
+				Data.Buildings.NONE)
 	# hills depletion check
 	# find trees next to food vat
-	tiles = get_x_tiles_next_to_y(BuildingData.Buildings.MINE, BuildingData.Buildings.HILL)
+	tiles = get_x_tiles_next_to_y(Data.Buildings.MINE, Data.Buildings.HILL)
 	for x in range(tiles.size()):
 		var rand = randi() % 100 
 		if rand == 0:  # 1% chance of delpletion
 			remove_building(tiles[x], \
 				load(tiles[x].buildingIcon.texture.resource_path.replace(".png", "d.png")), \
-				BuildingData.Buildings.NONE)
+				Data.Buildings.NONE)
 				
 
-func highlight_available_tiles(building_to_place: BuildingData.Buildings) -> int:
+func highlight_available_tiles(building_to_place: Data.Buildings) -> int:
 	# highlights the tiles we can place buildings on
 	tileHighlights.clear()
 	# loop through all of the tiles with buildings
@@ -103,13 +103,13 @@ func highlight_available_tiles(building_to_place: BuildingData.Buildings) -> int
 	remove_same_building_highlights(building_to_place)
 	
 	match building_to_place:
-		BuildingData.Buildings.MINE:
-			remove_highlights_not_next_to_terrain(BuildingData.Buildings.HILL)
-		BuildingData.Buildings.GREENHOUSE:
-			remove_highlights_not_next_to_terrain(BuildingData.Buildings.TREE)
-		BuildingData.Buildings.SOLAR_PANEL:
+		Data.Buildings.MINE:
+			remove_highlights_not_next_to_terrain(Data.Buildings.HILL)
+		Data.Buildings.VATS:
+			remove_highlights_not_next_to_terrain(Data.Buildings.TREE)
+		Data.Buildings.SOLAR:
 			remove_highlights_next_to_terrain()
-		BuildingData.Buildings.CONNECTOR:
+		Data.Buildings.CONNECTOR:
 			pass  # no limitation on placing a connector
 		_:
 			print("unknown building in Map.remove_same_building_highlights(): ", building_to_place)			
@@ -121,7 +121,7 @@ func highlight_available_tiles(building_to_place: BuildingData.Buildings) -> int
 	return tileHighlights.size()
 
 
-func remove_highlights_not_next_to_terrain(type: BuildingData.Buildings):
+func remove_highlights_not_next_to_terrain(type: Data.Buildings):
 	if tileHighlights.size() < 1: return
 	for x in range(tileHighlights.size()-1, -1, -1):
 		var remove = true
@@ -132,8 +132,8 @@ func remove_highlights_not_next_to_terrain(type: BuildingData.Buildings):
 		if remove: tileHighlights.remove_at(x)
 
 func remove_highlights_next_to_terrain():
-	remove_same_building_highlights(BuildingData.Buildings.HILL)
-	remove_same_building_highlights(BuildingData.Buildings.TREE)
+	remove_same_building_highlights(Data.Buildings.HILL)
+	remove_same_building_highlights(Data.Buildings.TREE)
 
 func remove_same_building_highlights(building_to_place: int):
 	if tileHighlights.size() < 1: return
@@ -162,27 +162,27 @@ func disable_tile_highlights():
 
 # places down a building on the map
 func place_building(tile, texture, buildingType):
-	if buildingType >= BuildingData.Buildings.BASE:   # don't add trees and hills
+	if buildingType >= Data.Buildings.BASE:   # don't add trees and hills
 		tilesWithBuildings.append(tile)
 	tile.place_building(texture, buildingType)
 	disable_tile_highlights()
 
 
-# filter for finding working mines and greenhouses
+# filter for finding working mines and food vats
 func working_m_and_g(tile):
-	return ((tile.buildingType == BuildingData.Buildings.GREENHOUSE or 
-		tile.buildingType == BuildingData.Buildings.GREENHOUSE) and 
+	return ((tile.buildingType == Data.Buildings.MINE or 
+		tile.buildingType == Data.Buildings.VATS) and 
 		tile.hasPower)
 
 
-# filter for finding mines and greenhouses turned off due to no power
+# filter for finding mines and food vats turned off due to no power
 func no_power_m_and_g(tile):
-	return ((tile.buildingType == BuildingData.Buildings.GREENHOUSE or 
-		tile.buildingType == BuildingData.Buildings.GREENHOUSE) and 
+	return ((tile.buildingType == Data.Buildings.MINE or 
+		tile.buildingType == Data.Buildings.VATS) and 
 		!tile.hasPower)
 
 
-func enable_mines_and_greenhouses():
+func enable_mines_and_vats():
 	var m_and_g: Array
 	var tile 
 	m_and_g = tilesWithBuildings.filter(no_power_m_and_g)
@@ -192,35 +192,35 @@ func enable_mines_and_greenhouses():
 		tile.turnRed.stop(true)  #play("red_alert")
 
 
-func disable_random_mines_and_greenhouses(number: int) ->  Dictionary:
-	#if low on power, shut down some buildings
-	var dict = {"buildings_disabled":0, "minusFood":0, "minusMedtal":0}
-	var tile 
-	var m_and_g: Array
-	m_and_g = tilesWithBuildings.filter(working_m_and_g)
-	print("m_and_g size: ", m_and_g.size())
-	if m_and_g.size() < number:
-		# not enough buildings to turm off, turn off all of them
-		number = m_and_g.size()
-	m_and_g.shuffle()
-	for i in range(number):
-		tile = m_and_g[i]
-		tile.hasPower = false
-		tile.turnRed.play("red_alert")
-		print("   x: ", tile.position.x/64+.5, "  y: ", tile.position.y/64+.5, \
-			"res: ", tile.buildingIcon.texture.resource_path) 
-		# subtract food or metal here
-		match tile.buildingType:
-			BuildingData.Buildings.MINE:
-				dict["minusMetal"] += 1
-			BuildingData.Buildings.GREENHOUSE:
-				dict["minusFood"] += 2	
-	return dict
+#func disable_random_mines_and_VATSs(number: int) ->  Dictionary:
+#	#if low on power, shut down some buildings
+#	var dict = {"buildings_disabled":0, "minusFood":0, "minusMedtal":0}
+#	var tile 
+#	var m_and_g: Array
+#	m_and_g = tilesWithBuildings.filter(working_m_and_g)
+#	print("m_and_g size: ", m_and_g.size())
+#	if m_and_g.size() < number:
+#		# not enough buildings to turm off, turn off all of them
+#		number = m_and_g.size()
+#	m_and_g.shuffle()
+#	for i in range(number):
+#		tile = m_and_g[i]
+#		tile.hasPower = false
+#		tile.turnRed.play("red_alert")
+#		print("   x: ", tile.position.x/64+.5, "  y: ", tile.position.y/64+.5, \
+#			"res: ", tile.buildingIcon.texture.resource_path) 
+#		# subtract food or metal here
+#		match tile.buildingType:
+#			Data.Buildings.MINE:
+#				dict["minusMetal"] += 1
+#			Data.Buildings.VATS:
+#				dict["minusFood"] += 2	
+#	return dict
 
 #remove a building from the map
 func remove_building(tile, texture, buildingType):
 	tilesWithBuildings.erase(tile)
-	tile.place_building(texture, buildingType, false)
+	tile.place_building(texture, buildingType)
 	
 
 func place_random_trees_and_hills():
