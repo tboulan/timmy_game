@@ -24,6 +24,7 @@ Data="*res://Data.gd"
 window/size/viewport_width=1280
 window/size/viewport_height=720
 window/size/resizable=false
+window/stretch/mode="viewport"
 
 [gui]
 
@@ -32,3 +33,4 @@ theme/custom_font="res://Font/Roboto-Regular.tres"
 [rendering]
 
 renderer/rendering_method="mobile"
+textures/vram_compression/import_etc2_astc=true
