@@ -4,11 +4,10 @@ extends Area2D
 # a Base building will be placed here at the start of the game
 @export var startTile = false
 
-# false if picked for low power penalty
-var hasPower: bool = true
-
-# do we have a building on this tile?
-#var hasBuilding: bool = false
+# Outages; set outage then also set tempOutage or permOutage
+var outage: bool = false
+var tempOutage: bool = false	# not enough power or people
+var permOutage: bool = false 	# if all trees or hills used up
 
 # can we place a building on this tile?
 var canPlaceBuilding: bool = false
@@ -27,11 +26,13 @@ func _ready():
 	# add the tile to the "Tiles" group when the node is initialized
 	add_to_group("Tiles")
 
+
 # turns on or off the green highlight
 func toggle_highlight(toggle):
 	highlight.visible = toggle
 	canPlaceBuilding = toggle
-	
+
+
 # called when a building is placed on the tile
 # sets the tile's building texture to display it
 func place_building(buildingTexture, type): #, addbuilding=true):
@@ -45,14 +46,17 @@ func place_building(buildingTexture, type): #, addbuilding=true):
 	buildingType = type
 	#if type == Data.Buildings.BASE:
 	#	turnRed.play("red_alert")
-	
+
+
 func get_building_type() -> Data.Buildings:
 	return buildingType
-	
+
+
 func reset():
 	#hasBuilding = false
 	buildingIcon.texture = null
 	buildingType = Data.Buildings.NONE
+
 
 # called when an input event takes place on the tile
 func _on_Tile_input_event(_viewport, event, _shape_idx):

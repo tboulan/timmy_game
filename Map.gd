@@ -4,6 +4,9 @@ extends Node
 # print("   x: ", tiles[x].position.x/64+.5, "  y: ", tiles[x].position.y/64+.5, \
 #    res: ", tiles[x].buildingIcon.texture.resource_path, "  rand: ", rand) 
 
+# game manager object in order to access those functions and values
+@onready var gameManager : Node = get_node("/root/MainScene")
+
 # all the tiles in the game
 var allTiles : Array
 
@@ -60,7 +63,7 @@ func get_x_tiles_next_to_y(building: Data.Buildings, terrain: Data.Buildings) ->
 	var foundTiles: Array = []
 	for x in range(tilesWithBuildings.size()):
 		if tilesWithBuildings[x].get_building_type() == building and \
-			tilesWithBuildings[x].hasPower == true:
+			tilesWithBuildings[x].outage == false:
 			for adjacent in adjacents:
 				var tile = get_tile_at_position(tilesWithBuildings[x].position + adjacent)
 				if tile != null and tile.get_building_type() == terrain:
@@ -70,8 +73,7 @@ func get_x_tiles_next_to_y(building: Data.Buildings, terrain: Data.Buildings) ->
 
 
 func trees_hills_depleted_check():
-	# trees depletion check
-	# find trees next to food vat
+	# trees depletion check, find trees next to food vat
 	var tiles = get_x_tiles_next_to_y(Data.Buildings.VATS, Data.Buildings.TREE)
 	for x in range(tiles.size()):
 		var rand = randi() % 100 
@@ -79,8 +81,8 @@ func trees_hills_depleted_check():
 			remove_building(tiles[x], \
 				load(tiles[x].buildingIcon.texture.resource_path.replace(".png", "d.png")), \
 				Data.Buildings.NONE)
-	# hills depletion check
-	# find trees next to food vat
+			# I should remove resources, mark tile with outage + permOutage
+	# hills depletion check, find trees next to food vat
 	tiles = get_x_tiles_next_to_y(Data.Buildings.MINE, Data.Buildings.HILL)
 	for x in range(tiles.size()):
 		var rand = randi() % 100 
@@ -88,7 +90,8 @@ func trees_hills_depleted_check():
 			remove_building(tiles[x], \
 				load(tiles[x].buildingIcon.texture.resource_path.replace(".png", "d.png")), \
 				Data.Buildings.NONE)
-				
+			# I should remove resources, mark tile with outage + permOutage
+
 
 func highlight_available_tiles(building_to_place: Data.Buildings) -> int:
 	# highlights the tiles we can place buildings on
@@ -131,11 +134,13 @@ func remove_highlights_not_next_to_terrain(type: Data.Buildings):
 				remove = false
 		if remove: tileHighlights.remove_at(x)
 
+
 func remove_highlights_next_to_terrain():
 	remove_same_building_highlights(Data.Buildings.HILL)
 	remove_same_building_highlights(Data.Buildings.TREE)
 
-func remove_same_building_highlights(building_to_place: int):
+
+func remove_same_building_highlights(building_to_place: Data.Buildings):
 	if tileHighlights.size() < 1: return
 	for x in range(tileHighlights.size()-1, -1, -1):
 		var remove = false
@@ -172,50 +177,64 @@ func place_building(tile, texture, buildingType):
 func working_m_and_g(tile):
 	return ((tile.buildingType == Data.Buildings.MINE or 
 		tile.buildingType == Data.Buildings.VATS) and 
-		tile.hasPower)
+		!tile.outage)
 
 
-# filter for finding mines and food vats turned off due to no power
-func no_power_m_and_g(tile):
+# filter for finding mines and food vats turned off due to outage
+func temp_outage_m_and_g(tile):
 	return ((tile.buildingType == Data.Buildings.MINE or 
 		tile.buildingType == Data.Buildings.VATS) and 
-		!tile.hasPower)
+		tile.outage)
 
 
-func enable_mines_and_vats():
+func end_temporary_outage():
 	var m_and_g: Array
+	#var tile 
+	m_and_g = tilesWithBuildings.filter(temp_outage_m_and_g)
+	print("in end temp outage, m_and_g size: ", m_and_g.size())
+	if m_and_g.size() < 1: return   # for debugging, this can be removed
+	for tile in m_and_g:
+		if tile.tempOutage == true:
+			tile.tempOutage = false
+			tile.turnRed.stop(true)  #play("red_alert")
+			if tile.permOutage == false:
+				tile.outage = false
+				# add back food or metal here
+				match tile.buildingType:
+					Data.Buildings.MINE:
+						gameManager.update_resource_per_turn(Data.Resources.METAL, Data.MINE_PROD_AMOUNT)
+						gameManager.update_resource_per_turn(Data.Resources.ENERGY, -Data.MINE_UPKEEP_AMOUNT)
+					Data.Buildings.VATS:
+						gameManager.update_resource_per_turn(Data.Resources.METAL, Data.MINE_PROD_AMOUNT)
+						gameManager.update_resource_per_turn(Data.Resources.ENERGY, -Data.MINE_UPKEEP_AMOUNT)
+	
+
+func start_temporary_outage(number: int) -> int:
+	#if low on power (or people?), shut down some buildings
 	var tile 
-	m_and_g = tilesWithBuildings.filter(no_power_m_and_g)
-	for i in m_and_g:
+	var m_and_g: Array
+	m_and_g = tilesWithBuildings.filter(working_m_and_g)
+	print("m_and_g size: ", m_and_g.size())
+	if m_and_g.size() < number:
+		# not enough buildings to turm off, turn off all of them
+		number = m_and_g.size()
+	m_and_g.shuffle()
+	for i in range(number):
 		tile = m_and_g[i]
-		tile.hasPower = true
-		tile.turnRed.stop(true)  #play("red_alert")
-
-
-#func disable_random_mines_and_VATSs(number: int) ->  Dictionary:
-#	#if low on power, shut down some buildings
-#	var dict = {"buildings_disabled":0, "minusFood":0, "minusMedtal":0}
-#	var tile 
-#	var m_and_g: Array
-#	m_and_g = tilesWithBuildings.filter(working_m_and_g)
-#	print("m_and_g size: ", m_and_g.size())
-#	if m_and_g.size() < number:
-#		# not enough buildings to turm off, turn off all of them
-#		number = m_and_g.size()
-#	m_and_g.shuffle()
-#	for i in range(number):
-#		tile = m_and_g[i]
-#		tile.hasPower = false
-#		tile.turnRed.play("red_alert")
-#		print("   x: ", tile.position.x/64+.5, "  y: ", tile.position.y/64+.5, \
-#			"res: ", tile.buildingIcon.texture.resource_path) 
-#		# subtract food or metal here
-#		match tile.buildingType:
-#			Data.Buildings.MINE:
-#				dict["minusMetal"] += 1
-#			Data.Buildings.VATS:
-#				dict["minusFood"] += 2	
-#	return dict
+		tile.outage = true
+		tile.tempOutage = true
+		tile.turnRed.play("red_alert")
+		print("   x: ", tile.position.x/64+.5, "  y: ", tile.position.y/64+.5, \
+			"res: ", tile.buildingIcon.texture.resource_path) 
+		# subtract food or metal here
+		match tile.buildingType:
+			Data.Buildings.MINE:
+				gameManager.update_resource_per_turn(Data.Resources.METAL, -Data.MINE_PROD_AMOUNT)
+				gameManager.update_resource_per_turn(Data.Resources.ENERGY, Data.MINE_UPKEEP_AMOUNT)
+			Data.Buildings.VATS:
+				gameManager.update_resource_per_turn(Data.Resources.METAL, -Data.MINE_PROD_AMOUNT)
+				gameManager.update_resource_per_turn(Data.Resources.ENERGY, Data.MINE_UPKEEP_AMOUNT)
+	return number
 
 #remove a building from the map
 func remove_building(tile, texture, buildingType):

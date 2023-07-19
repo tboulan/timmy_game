@@ -1,5 +1,11 @@
 extends Node2D
 
+# are we currently placing down a building?
+var currentlyPlacingBuilding : bool = false
+
+# type of building we're currently placing
+var buildingToPlace : Data.Buildings
+
 # current amount of each resource we have
 var curPeople : int = 10
 var curFood : int = 50
@@ -12,12 +18,6 @@ var metalPerTurn : int = 0
 var energyPerTurn : int = 0
 var peoplePerTurn : int = 0
 var curTurn : int = 0 # 0 will display Year: 1, Month: 1
-
-# are we currently placing down a building?
-var currentlyPlacingBuilding : bool = false
-
-# type of building we're currently placing
-var buildingToPlace : Data.Buildings
 
 # components
 @onready var ui : Node = get_node("UI")
@@ -32,16 +32,16 @@ func _ready():
 
 # called when the player ends the turn
 func end_turn():
+   # check for things that could reduce our resources
+	curFood = curFood - curPeople  # People eat food
+	food_problems_check()   	
+	energy_problems_check()
+	people_reproduce_check()
 	# update our current resource amounts
 	curFood += foodPerTurn
 	curMetal += metalPerTurn
 	curEnergy += energyPerTurn
 	resource_maximums_check()
-	# People eat food
-	curFood = curFood - curPeople
-	food_problems_check()
-	#energy_problems_check()
-	people_reproduce_check()
 	map.trees_hills_depleted_check()   # Tress next to food vats may be expended
 	# increase current turn
 	curTurn += 1
@@ -49,15 +49,16 @@ func end_turn():
 	ui.update_resource_text()
 	ui.on_end_turn()
 	peoplePerTurn = 0 # reset to 0 if we reproduced this turn 
+	map.end_temporary_outage()  # restore buildings shutdown due to low power/people
 
 
-func _energy_problems_check():
+func energy_problems_check():
 	# if energy is less than zero, shut off some buildings
 	if curEnergy >= 0: return
 	print("Energy less than zero! number of buildings to turn off ", abs(curEnergy))
-	var number = map.disable_random_mines_and_vats(abs(curEnergy))
+	var number = map.start_temporary_outage(abs(curEnergy))
 	print("Turned off ", number, " building(s)")
-	curEnergy = 0  # reset energey to zero
+	curEnergy = 0  # reset energy to zero
 
 
 func resource_maximums_check():
@@ -120,8 +121,8 @@ func place_building (tileToPlaceOn):
 			else:	
 				curMetal = curMetal - 4  
 				texture = Data.mine.iconTexture
-				add_to_resource_per_turn(Data.mine.prodResource, Data.mine.prodResourceAmount)
-				add_to_resource_per_turn(Data.mine.upkeepResource, -Data.mine.upkeepResourceAmount)
+				update_resource_per_turn(Data.mine.prodResource, Data.mine.prodResourceAmount)
+				update_resource_per_turn(Data.mine.upkeepResource, -Data.mine.upkeepResourceAmount)
 		Data.Buildings.VATS:
 			if curMetal < 3:
 				enoughResources = false
@@ -129,8 +130,8 @@ func place_building (tileToPlaceOn):
 			else:
 				curMetal = curMetal - 3 
 				texture = Data.vats.iconTexture
-				add_to_resource_per_turn(Data.vats.prodResource, Data.vats.prodResourceAmount)
-				add_to_resource_per_turn(Data.vats.upkeepResource, -Data.vats.upkeepResourceAmount)
+				update_resource_per_turn(Data.vats.prodResource, Data.vats.prodResourceAmount)
+				update_resource_per_turn(Data.vats.upkeepResource, -Data.vats.upkeepResourceAmount)
 		Data.Buildings.SOLAR:
 			if curMetal < 2:
 				enoughResources = false
@@ -138,8 +139,8 @@ func place_building (tileToPlaceOn):
 			else:	
 				curMetal = curMetal - 2 
 				texture = Data.solar.iconTexture
-				add_to_resource_per_turn(Data.solar.prodResource, Data.solar.prodResourceAmount)
-				add_to_resource_per_turn(Data.solar.upkeepResource, -Data.solar.upkeepResourceAmount)
+				update_resource_per_turn(Data.solar.prodResource, Data.solar.prodResourceAmount)
+				update_resource_per_turn(Data.solar.upkeepResource, -Data.solar.upkeepResourceAmount)
 		Data.Buildings.CONNECTOR:
 			if curMetal < 1:
 				enoughResources = false
@@ -147,8 +148,8 @@ func place_building (tileToPlaceOn):
 			else:	
 				curMetal = curMetal - 1 
 				texture = Data.connector.iconTexture
-				add_to_resource_per_turn(Data.connector.prodResource, Data.connector.prodResourceAmount)
-				add_to_resource_per_turn(Data.connector.upkeepResource, -Data.connector.upkeepResourceAmount)
+				update_resource_per_turn(Data.connector.prodResource, Data.connector.prodResourceAmount)
+				update_resource_per_turn(Data.connector.upkeepResource, -Data.connector.upkeepResourceAmount)
 		_:
 			printerr("unknown buildingToPlace in GameManger.place_building")	
 	# place the building on the map
@@ -160,7 +161,7 @@ func place_building (tileToPlaceOn):
 	ui.update_resource_text()
 
 # adds an amount to a certain resource per turn
-func add_to_resource_per_turn(resource, amount):
+func update_resource_per_turn(resource, amount):
 	match resource:
 		Data.Resources.NONE:
 			return
