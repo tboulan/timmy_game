@@ -174,26 +174,26 @@ func place_building(tile, texture, buildingType):
 
 
 # filter for finding working mines and food vats
-func working_m_and_g(tile):
+func working_m_and_v(tile):
 	return ((tile.buildingType == Data.Buildings.MINE or 
 		tile.buildingType == Data.Buildings.VATS) and 
 		!tile.outage)
 
 
 # filter for finding mines and food vats turned off due to outage
-func temp_outage_m_and_g(tile):
+func temp_outage_m_and_v(tile):
 	return ((tile.buildingType == Data.Buildings.MINE or 
 		tile.buildingType == Data.Buildings.VATS) and 
 		tile.outage)
 
 
 func end_temporary_outage():
-	var m_and_g: Array
+	var m_and_v: Array
 	#var tile 
-	m_and_g = tilesWithBuildings.filter(temp_outage_m_and_g)
-	print("in end temp outage, m_and_g size: ", m_and_g.size())
-	if m_and_g.size() < 1: return   # for debugging, this can be removed
-	for tile in m_and_g:
+	m_and_v = tilesWithBuildings.filter(temp_outage_m_and_v)
+	print("in end temp outage, m_and_g size: ", m_and_v.size())
+	if m_and_v.size() < 1: return   # for debugging, this can be removed
+	for tile in m_and_v:
 		if tile.tempOutage == true:
 			tile.tempOutage = false
 			tile.turnRed.stop(true)  #play("red_alert")
@@ -205,36 +205,35 @@ func end_temporary_outage():
 						gameManager.update_resource_per_turn(Data.Resources.METAL, Data.MINE_PROD_AMOUNT)
 						gameManager.update_resource_per_turn(Data.Resources.ENERGY, -Data.MINE_UPKEEP_AMOUNT)
 					Data.Buildings.VATS:
-						gameManager.update_resource_per_turn(Data.Resources.METAL, Data.MINE_PROD_AMOUNT)
-						gameManager.update_resource_per_turn(Data.Resources.ENERGY, -Data.MINE_UPKEEP_AMOUNT)
+						gameManager.update_resource_per_turn(Data.Resources.FOOD, Data.VATS_PROD_AMOUNT)
+						gameManager.update_resource_per_turn(Data.Resources.ENERGY, -Data.VATS_UPKEEP_AMOUNT)
 	
 
 func start_temporary_outage(number: int) -> int:
 	#if low on power (or people?), shut down some buildings
-	var tile 
-	var m_and_g: Array
-	m_and_g = tilesWithBuildings.filter(working_m_and_g)
-	print("m_and_g size: ", m_and_g.size())
-	if m_and_g.size() < number:
+	var m_and_v: = tilesWithBuildings.filter(working_m_and_v)
+	print("m_and_v size: ", m_and_v.size())
+	if m_and_v.size() < number:
 		# not enough buildings to turm off, turn off all of them
-		number = m_and_g.size()
-	m_and_g.shuffle()
+		number = m_and_v.size()
+	m_and_v.shuffle()
 	for i in range(number):
-		tile = m_and_g[i]
+		var tile = m_and_v[i]
 		tile.outage = true
 		tile.tempOutage = true
 		tile.turnRed.play("red_alert")
 		print("   x: ", tile.position.x/64+.5, "  y: ", tile.position.y/64+.5, \
 			"res: ", tile.buildingIcon.texture.resource_path) 
-		# subtract food or metal here
+		# subtract food or metal and reduce energy needed
 		match tile.buildingType:
 			Data.Buildings.MINE:
 				gameManager.update_resource_per_turn(Data.Resources.METAL, -Data.MINE_PROD_AMOUNT)
 				gameManager.update_resource_per_turn(Data.Resources.ENERGY, Data.MINE_UPKEEP_AMOUNT)
 			Data.Buildings.VATS:
-				gameManager.update_resource_per_turn(Data.Resources.METAL, -Data.MINE_PROD_AMOUNT)
-				gameManager.update_resource_per_turn(Data.Resources.ENERGY, Data.MINE_UPKEEP_AMOUNT)
+				gameManager.update_resource_per_turn(Data.Resources.FOOD, -Data.VATS_PROD_AMOUNT)
+				gameManager.update_resource_per_turn(Data.Resources.ENERGY, Data.VATS_UPKEEP_AMOUNT)
 	return number
+
 
 #remove a building from the map
 func remove_building(tile, texture, buildingType):
@@ -247,14 +246,12 @@ func place_random_trees_and_hills():
 	var tree1 = preload("res://Sprites/Tree1.png")
 	var tree2 = preload("res://Sprites/Tree2.png")
 	var tree3 = preload("res://Sprites/Tree3.png")
-
 	# Three different looking hills to be picked at random
 	var hill1 = preload("res://Sprites/Hill1.png")
 	var hill2 = preload("res://Sprites/Hill2.png")
 	var hill3 = preload("res://Sprites/Hill3.png")
-
 	# Place random hills and trees
-	for x in range(1, 20):
-		place_building(allTiles.pick_random(), [tree1, tree2, tree3].pick_random(), -1)	
-		place_building(allTiles.pick_random(), [hill1, hill2, hill3].pick_random(), -2)	
+	for x in range(1, 22):
+		place_building(allTiles.pick_random(), [tree1, tree2, tree3].pick_random(), Data.Buildings.TREE)	
+		place_building(allTiles.pick_random(), [hill1, hill2, hill3].pick_random(), Data.Buildings.HILL)	
 	

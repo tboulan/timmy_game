@@ -10,7 +10,7 @@ const SOLAR_PROD_AMOUNT = 2
 const MINE_UPKEEP_AMOUNT = 1
 const VATS_UPKEEP_AMOUNT = 1
 
-# ID, Image, resource produced, amount, resource consumed, amount
+# ID, Image, resource produced and amount, resource consumed and amount
 var base = Building.new(Buildings.BASE, preload("res://Sprites/Base.png"), 
 		Resources.NONE, 0, Resources.NONE, 0)
 var mine = Building.new(Buildings.MINE, preload("res://Sprites/Mine.png"), 

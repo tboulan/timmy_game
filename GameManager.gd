@@ -7,17 +7,17 @@ var currentlyPlacingBuilding : bool = false
 var buildingToPlace : Data.Buildings
 
 # current amount of each resource we have
-var curPeople : int = 10
-var curFood : int = 50
-var curMetal : int = 20
-var curEnergy : int = 15
+var curPeople:	int = 10
+var curFood:	int = 50
+var curMetal:	int = 20
+var curEnergy:	int = 15
 
 # amount of each resource we get each turn
-var foodPerTurn : int = 0
-var metalPerTurn : int = 0
-var energyPerTurn : int = 0
-var peoplePerTurn : int = 0
-var curTurn : int = 0 # 0 will display Year: 1, Month: 1
+var foodPerTurn:	int = 0
+var metalPerTurn:	int = 0
+var energyPerTurn:	int = 0
+var peoplePerTurn:	int = 0
+var curTurn:	int = 0 # 0 will display Year: 1, Month: 1
 
 # components
 @onready var ui : Node = get_node("UI")
@@ -41,12 +41,10 @@ func end_turn():
 	curFood += foodPerTurn
 	curMetal += metalPerTurn
 	curEnergy += energyPerTurn
-	resource_maximums_check()
 	map.trees_hills_depleted_check()   # Tress next to food vats may be expended
-	# increase current turn
-	curTurn += 1
-	# update the UI
-	ui.update_resource_text()
+	reset_resources_above_99()
+	curTurn += 1  # increase current turn
+	ui.update_resource_text()  
 	ui.on_end_turn()
 	peoplePerTurn = 0 # reset to 0 if we reproduced this turn 
 	map.end_temporary_outage()  # restore buildings shutdown due to low power/people
@@ -54,23 +52,19 @@ func end_turn():
 
 func energy_problems_check():
 	# if energy is less than zero, shut off some buildings
-	if curEnergy >= 0: return
-	print("Energy less than zero! number of buildings to turn off ", abs(curEnergy))
-	var number = map.start_temporary_outage(abs(curEnergy))
-	print("Turned off ", number, " building(s)")
-	curEnergy = 0  # reset energy to zero
+	if curEnergy < 0: 
+		var number = map.start_temporary_outage(abs(curEnergy))
+		var warning = str("Energy less than zero! number of buildings to turn off ", abs(number))
+		print(warning)
+		OS.alert(warning, 'Low on Energy')
+		curEnergy = 0  # reset energy to zero
 
 
-func resource_maximums_check():
-	if curFood > 99:
-		curFood = 99
-	if curMetal > 99:
-		curMetal = 99
-	if curEnergy > 99:
-		curEnergy = 99
-	if curPeople > 99:
-		# Add "You WIN Screen"
-		pass
+func reset_resources_above_99():
+	if curFood > 99:	curFood = 99
+	if curMetal > 99:	curMetal = 99
+	if curEnergy > 99:	curEnergy = 99
+	if curPeople > 99:	curPeople = 99  # Add "You WIN Screen" for 99 people?
 
 
 func people_reproduce_check():
@@ -86,8 +80,8 @@ func food_problems_check():
 	if curFood >= 0:
 		return
 	var numberDead : int = int(randi() % curPeople / 2.0) + 1
-	var warning = str("we've run out of food, ", numberDead, " died!  But you do get ", numberDead, " more food.")
-	printerr(warning)
+	var warning = str("You ran out of food, ", numberDead, " died!  But you do get ", numberDead, " more food.")
+	print(warning)
 	OS.alert(warning, 'People died from Starvation')
 	curPeople = curPeople - numberDead
 	curFood = numberDead
